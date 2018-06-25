@@ -1,0 +1,34 @@
+{
+  "0xe6a0e320687e2042112093713c4cc74e28b407b145a40d13ca804558332d561a": {
+    "contracts": {
+      "0xcca3e054ba287ab1bdb9947c25d1e40e02f6329cc6d4647b9d74a47f008ee13d": {
+        "name": "DTwitter",
+        "address": "0x5B48A8d82F60aBd90d02e87F026719b508BEF5c6"
+      },
+      "0x0e694d2c6f0043299fb6930b131eb6934fbb9a9d402ba8ae83ef8e3d9c3e792a": {
+        "name": "DTwitter",
+        "address": "0x79c86e9Ea56e4B99759c36D91810E4Af08ce8cC4"
+      },
+      "0x70f8ad42b704e782526b151fce07dc1a5159e28aa2af6143cfff61d09a0d97f0": {
+        "name": "DTwitter",
+        "address": "0xED0123DE1c9E236FAc56821cc7Cfa6f00046B25B"
+      },
+      "0xab6b870e32e2942fd0ad8ecc571c0a13ea251c3c9ab989a8c52be899d9c1ec2f": {
+        "name": "DTwitter",
+        "address": "0xE89889C644De10C809744E3168a693647567e4Ab"
+      },
+      "0xbb6f6e5910fd5d98c3a0c51c0342ae17b53fe2d380cfaec79e08f7429b3b4753": {
+        "name": "DTwitter",
+        "address": "0x9Ada8629C12dBf272145ea7dF144EdF009110536"
+      },
+      "0x5e0799a641be35789d1382eace6c6352cd8ce6e38efa399a2b796201b39d96bf": {
+        "name": "DTwitter",
+        "address": "0x157eB7A9e11f00eCB69f2dFe1841314DA6B8b8a7"
+      },
+      "0xc92813bee4cc03e199de50a44c828f2543782dba34313c09a687d483149ce4a7": {
+        "name": "DTwitter",
+        "address": "0x89a6Ef39219D916b888a11f59616b75dFC70c5b2"
+      }
+    }
+  }
+}
