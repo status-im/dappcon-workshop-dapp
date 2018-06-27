@@ -5,30 +5,32 @@ import EmbarkJS from 'Embark/EmbarkJS';
 window.EmbarkJS = EmbarkJS;
 window.DTwitter = DTwitter;
 
-var tweetEvent;
+let tweetEvent;
 $(document).ready(function() {
 
   // Create Account
   $(".createProfile").click(function() {
-    var username = $(".createProfileView input[name=username]").val();
-    var description = $(".createProfileView input[name=description]").val();
+    let username = $(".createProfileView input[name=username]").val();
+    let description = $(".createProfileView input[name=description]").val();
     EmbarkJS.onReady(function(){
-        DTwitter.createAccount(username, description, {gas: 800000});
+        DTwitter.methods.createAccount(username, description).send({gas: 800000});
     });
   });
 
   // View Account
   $(".viewUsername").click(function() {
-    var username = $(".viewUser input[name=username]").val();
+    let username = $(".viewUser input[name=username]").val();
     console.log('username: ' + username + ', hash: ' + web3.utils.keccak256(username));
-    DTwitter.users(web3.utils.keccak256(username)).then(function(user) {
-      console.log('user: ' + user);
+    DTwitter.methods.users(web3.utils.keccak256(username)).call().then(function(user) {
+      console.log('user: ' + JSON.stringify(user));
       updateProfile({
-        username: user[1],
-        description: user[2],
-        photoUrl: EmbarkJS.Storage.getUrl(web3.toAscii(user[4]))
+        username: user.username,
+        description: user.description,
+        picture: EmbarkJS.Storage.getUrl(user.picture)
       });
     });
+
+    if(!tweetEvent) return;
 
     if (tweetEvent) {
       tweetEvent.stop();
@@ -37,10 +39,10 @@ $(document).ready(function() {
     $("#tweets").empty();
 
     // Listen to tweets
-    tweetEvent = DTwitter.NewTweet({_from: web3.utils.keccak256(username)}, {fromBlock: 0});
+    tweetEvent = DTwitter.events.NewTweet({_from: web3.utils.keccak256(username)}, {fromBlock: 0});
     tweetEvent.then(function(event) {
-      var index = event.args.index.toNumber();
-      DTwitter.getTweet(username, index).then(function(tweet) {
+      let index = event.args.index.toNumber();
+      DTwitter.methods.getTweet(username, index).call().then(function(tweet) {
         addTweet({text: tweet});
       });
     });
@@ -49,28 +51,28 @@ $(document).ready(function() {
 
   // Edit Account Description
   $("#edit-profile-info button").click(function() {
-    var username = $(".viewUser input[name=username]").val();
-    var description = $("#edit-profile-info .description").val();
+    let username = $(".viewUser input[name=username]").val();
+    let description = $("#edit-profile-info .description").val();
 
-    DTwitter.editAccount(username, description);
+    DTwitter.methods.editAccount(username, description).send({gas: 800000});
   });
 
   // Upload Photo
   $("#edit-profile-photo button").click(function() {
-    var username = $(".viewUser input[name=username]").val();
-    var uploadInput = $("input[type=file]");
+    let username = $(".viewUser input[name=username]").val();
+    let uploadInput = $("input[type=file]");
 
     EmbarkJS.Storage.uploadFile(uploadInput).then(function(hash) {
-      DTwitter.updateProfilePicture(username, hash);
+      DTwitter.methods.updateProfilePicture(username, hash).send({gas: 800000});
     });
   });
 
   // Make a Tweet
   $("#doTweet button").click(function() {
-    var username = $(".viewUser input[name=username]").val();
-    var text = $("input[name=text]").val();
+    let username = $(".viewUser input[name=username]").val();
+    let text = $("input[name=text]").val();
 
-    DTwitter.tweet(username, text);
+    DTwitter.methods.tweet(username, text).send({gas: 800000});
   });
 
 });

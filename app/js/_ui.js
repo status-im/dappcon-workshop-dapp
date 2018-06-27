@@ -1,6 +1,9 @@
 import $ from 'jquery';
+import imgAvatar from '../img/avatar-default.png';
 
 $(document).ready(function() {
+
+  $('#profile img').attr('src', imgAvatar);
 
   $(".editLink").click(function() {
     $("#edit-profile-info").slideToggle();
@@ -19,17 +22,17 @@ $(document).ready(function() {
 });
 
 window.updateProfile = function(opts) {
-  var username = opts.username;
-  var description = opts.description;
-  var photo = opts.photoUrl; 
+  let username = opts.username;
+  let description = opts.description;
+  let photo = opts.picture; 
   if (photo == null || photo == EmbarkJS.Storage.getUrl('')) {
      //photo = "http://i.imgur.com/xAmv5AO.jpg";
-     photo = "http://localhost:8001/profile.jpg";
+     photo = imgAvatar;
   }
 
   $(".profileView .profile-name").html(username);
   $(".profileView .profile-description").html(description);
-  $(".profileView img").attr('src', photo);
+  $(".profileView img").attr('src', photo).attr('alt', username);
 };
 
 window.addTweet = function(tweet) {

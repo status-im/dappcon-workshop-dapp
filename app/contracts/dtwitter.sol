@@ -6,7 +6,7 @@ contract DTwitter {
         string username;
         string description;
         address owner;
-        bytes picture;
+        string picture;
 
         string[] tweets;
     }
@@ -15,7 +15,7 @@ contract DTwitter {
 
     event NewTweet(
         bytes32 indexed _from,
-        uint index
+        uint index 
     );
 
     function createAccount(string username, string description) public {
@@ -30,7 +30,7 @@ contract DTwitter {
         users[usernameHash].description = description;
     }
 
-    function updateProfilePicture(string username, bytes pictureHash) public {
+    function updateProfilePicture(string username, string pictureHash) public {
         bytes32 usernameHash = keccak256(abi.encodePacked(username));
         require(users[usernameHash].owner == msg.sender);
 
