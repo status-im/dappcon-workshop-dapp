@@ -35,7 +35,7 @@
       },
       "0x1797453304e4b69b44fb7d649a72ca80394a8b4e1d14c2cc530f5dc3ae1f0ea3": {
         "name": "ENSRegistry",
-        "address": "0x4F11C0308398661b149727c225726b6A2f1Bd533"
+        "address": "0x54cD1E7d22Be240C0F8728C2Daa51336447e532D"
       },
       "0xf7082984e1d389aef8e723917135a24b36de42604f88aaaa240e2fb530992c5d": {
         "name": "FIFSRegistrar",
@@ -115,11 +115,19 @@
       },
       "0xe5409c181a9197409bb86c1dac705b0cea3c4e30f361b42dbdaea7e7f1729a93": {
         "name": "DTwitter",
-        "address": "0x1aAB77723bD0a27DD85A76Ae4c6f471dC8643e15"
+        "address": "0xBc14A4C0A71D290ec86A6F2A4B0B26a64a9512B1"
       },
       "0x6d1e2e0bd96a493aaab99909e0fd4ed874e93edd9a58020916846e08876c3b01": {
         "name": "FIFSRegistrar",
         "address": "0xc97EB051Ea7544d2DEA2846b791212Ae938173c2"
+      },
+      "0x471afc554d47abbf4a63f004f2bb69bc54ab69908c3c21285bf2f32af72c0189": {
+        "name": "FIFSRegistrar",
+        "address": "0x89114C48c7A31a936cA79Ed170E3AA7075204D21"
+      },
+      "0x19128eed1c8800a3f992243b8dad181ab39f3e207713d027d66229f40f952a48": {
+        "name": "FIFSRegistrar",
+        "address": "0xb9C97eD16F3f9CF645d14F37D14491BFb9FaB16F"
       }
     }
   },
@@ -144,6 +152,146 @@
       "0xefe8016b3c8622d516978caa049485af0a28d218b042fbfa1e2d467b9a1cd38e": {
         "name": "FIFSRegistrar",
         "address": "0x1124f45c80A2Fe638B1a9042125299bCB588A3D7"
+      }
+    }
+  },
+  "0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d": {
+    "contracts": {
+      "0x1797453304e4b69b44fb7d649a72ca80394a8b4e1d14c2cc530f5dc3ae1f0ea3": {
+        "name": "ENSRegistry",
+        "address": "0xa684Bd6FdfA41332069Dc5dE3A2c6dA2099A4012"
+      },
+      "0xe5409c181a9197409bb86c1dac705b0cea3c4e30f361b42dbdaea7e7f1729a93": {
+        "name": "DTwitter",
+        "address": "0x64b646dFA40e23fC5E681f9851861acBDa377D6d"
+      },
+      "0x6d1e2e0bd96a493aaab99909e0fd4ed874e93edd9a58020916846e08876c3b01": {
+        "name": "FIFSRegistrar",
+        "address": "0x20d298a978bE2AE9A2533A1E53c49F1A7Ea17cFC"
+      }
+    }
+  },
+  "0x2719372560498ffc102f913621fdd11c668620634b0bd19ac99f4c1b67b4a7ff": {
+    "contracts": {
+      "0x1797453304e4b69b44fb7d649a72ca80394a8b4e1d14c2cc530f5dc3ae1f0ea3": {
+        "name": "ENSRegistry",
+        "address": "0x3a305F52947bDdb1663ba48229BcbC33238790d8"
+      },
+      "0x6a770cca5f266bae333e2c802b4f0710a548ccb64661907121279190a5e8cd2b": {
+        "name": "FIFSRegistrar",
+        "address": "0x380F1cd84E746B792Aae796c62aC48783800475d"
+      },
+      "0x940f63055cb17182e1de6792164769bba2f02a4c663a79a8b1bdacb05dbfdef2": {
+        "name": "DTwitter",
+        "address": "0xc16e87a0716cAeF4560E36B2FfdaBfd0f74d4e17"
+      },
+      "0x8512591968343fa8314588a1194311ca6ba57650bae5085b1198f3508513fc09": {
+        "name": "FIFSRegistrar",
+        "address": "0x0Fa5D598ad59B6Ad9936735C82697A2f12AB9309"
+      },
+      "0x7fc0f6d624bcbcaf4649145e39c9b642b05f87c9cd62a83e75b4167bf6280661": {
+        "name": "FIFSRegistrar",
+        "address": "0xC1eaF9904B3D0C2dA8fd8feCfFB58F524Caa4235"
+      },
+      "0xdbaf82c08d54eeed3a161922e9e9cf16acc9a031ecf00e66c1a6c9a7dfcb7470": {
+        "name": "DTwitter",
+        "address": "0x2Eaf83D1421238776568b5c0d6779dCae111d3B0"
+      },
+      "0x6d1e2e0bd96a493aaab99909e0fd4ed874e93edd9a58020916846e08876c3b01": {
+        "name": "FIFSRegistrar",
+        "address": "0x6CcEa7207DF046dA53691F623EbA319D16b86cF9"
+      },
+      "0x0493e11c7d7363b628e1ecd882629c40096d4c05dd62aa0c6a6cff950e41829c": {
+        "name": "DTwitter",
+        "address": "0x782bB0785C0Fc0a19CD3f0AD6861e1E01355D497"
+      },
+      "0x82270912d9d3b43446636416c256f2fda79674a77417315ed6bb4620b52fe54b": {
+        "name": "DTwitter",
+        "address": "0x3838787BA50DbDEF323FF15dfC56F179FABb86c3"
+      },
+      "0x0639bcd42730e51cf5ecc22a06ffd7792fe85c3d774b8ba59f0d08829b914b16": {
+        "name": "FIFSRegistrar",
+        "address": "0x3A5eaaeFdB48Dc7a5F8DF1a3b036296451233FD2"
+      },
+      "0x9069e55a1671e0d65292da254624454e1164d95a59b5054226444641dc5b7241": {
+        "name": "DTwitter",
+        "address": "0x9C65d2936E38F13210ba52Db2eA66113f403F0A4"
+      },
+      "0x4d7362a677446c5c3833b1f92c495c9a4ef102f5c89baecd8ee5c7dedda43bc0": {
+        "name": "FIFSRegistrar",
+        "address": "0xd6bb0D548Cc339e93303e839D2F31A0CB8e0C7Ed"
+      },
+      "0xf39de5ffc41b8c0cd27c9428411594ad4e93df94a4d8d200dff4d616ff2c2da6": {
+        "name": "FIFSRegistrar",
+        "address": "0x6826F913EB5D5fC1b02832128DfFB51305050295"
+      },
+      "0xeef98a0087f598564ce46e90efb76c011dabe1aaaa42f2f058b7cf6aa7076a3d": {
+        "name": "FIFSRegistrar",
+        "address": "0x466C87E7d667E142dE074e7B95de2Ac0ee840d55"
+      },
+      "0x9e01145e31f3e40a45b0a87e04f331d553433c01872b51cce608ec1e7a618f53": {
+        "name": "FIFSRegistrar",
+        "address": "0x444eE0078C0eaDb191226845A8EFeA9920A1B3Ac"
+      },
+      "0xd90232b0ff53ce7e8f0f9f952727e5465d4a75883b55374a9285ef2c87487a74": {
+        "name": "FIFSRegistrar",
+        "address": "0x63E87033f39A098a4D2778f74059b747c8Fa9b2e"
+      },
+      "0x87d94e2612fa834a9fdb8198d579a2b13d5e3bb55b077c744ffe9a60f85a494a": {
+        "name": "FIFSRegistrar",
+        "address": "0x1Af8411262Bd7Bcd3653aBb81abAA3C4d3B67262"
+      },
+      "0x6111dd2ed21153ccfb4a0222c5afb3a40da7a1331876068d720d9eca1d127cff": {
+        "name": "FIFSRegistrar",
+        "address": "0x874F6416a2751A9685942ceBad5724F6552363Ba"
+      },
+      "0xc07d9ab43515dc74fc1152d38bd21e18d669d74da0996fb5336084dfc3ced879": {
+        "name": "FIFSRegistrar",
+        "address": "0x2551ECA589280510F52455A4c436A5c092750a57"
+      },
+      "0x8e9719440b59d6df083533898ef3ea6a77962dcb8ce81677aac7948ef0c20e34": {
+        "name": "FIFSRegistrar",
+        "address": "0xefc2913cA38Cc42a2c7e37d5b8772C38d8f3E6EE"
+      },
+      "0x24f84ae6b65cd098c258c29426edccff5dd244bf406691fc283b3a4d9a3c37c6": {
+        "name": "FIFSRegistrar",
+        "address": "0x303d27c6f23A67e88Ea12eFdc763AaeD1Cc14a1c"
+      },
+      "0x3a721b7e56717bee6a4962e63d8288bbbdb3dca04559a9e4f9953e212dc0df48": {
+        "name": "FIFSRegistrar",
+        "address": "0x538689FDBCDff43FF7DbD1a1bd32135986b48B7c"
+      },
+      "0x3a8831a9b9c58734d580907b3d9901e2dcf2085623a8374cb799fe728aa44457": {
+        "name": "FIFSRegistrar",
+        "address": "0xe6B9e1fE969B8Ae25d865bBAF5857D470d395A7c"
+      },
+      "0x4d366bd85cc54f5c4a83f6b40b3a3677310eb0dd34f389767d63387c27967a94": {
+        "name": "FIFSRegistrar",
+        "address": "0x848DEd3483FC46943696FD5126fC6EBea606755C"
+      },
+      "0x306a442b9d884112f40feb96d7f7c6feedfcb5e3a22f7f0fb94e2707f705e9ae": {
+        "name": "FIFSRegistrar",
+        "address": "0x8Dae7b46F857FbaB2b6CdB72E19F00c19E935e32"
+      },
+      "0x4106d6b2ac55d1b27a711efdc9958888872ea92150182b6acdbba71337ecb4b0": {
+        "name": "FIFSRegistrar",
+        "address": "0xaeF05E95a9911DDcd1C6a74bC5Ec5418f59D8721"
+      },
+      "0xfa425d3927a89290384086a8ee3094e79705d1efb5e26d9488b2afdef186b85a": {
+        "name": "FIFSRegistrar",
+        "address": "0x8Bb521a91a87bA2b45838b945f42bB38Eea75AfD"
+      },
+      "0xcc778f563e76137fa39d446d61c7eab7c4a0c7ff90022e952e7102cd393a5d7a": {
+        "name": "FIFSRegistrar",
+        "address": "0xD7C4419cF91C9B3D2d960339EC7BD9590b30D2aB"
+      },
+      "0x17e26bdacc4661c4eb3e1244d0a3f4989c2a25edd5305b89f2ffe844ce1344b1": {
+        "name": "FIFSRegistrar",
+        "address": "0xBB6599908d6a5e9B93da8D25eDA766e516a9dad4"
+      },
+      "0x848e86fb58f1f7768f1189a9d854c8dfef9da22ddeff9c61cd2e0fba36be8d7c": {
+        "name": "FIFSRegistrar",
+        "address": "0xdB823DCB3EB04b7A5d766F5001Ce007A2c2AE7fe"
       }
     }
   }

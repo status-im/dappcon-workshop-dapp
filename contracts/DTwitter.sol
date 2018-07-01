@@ -30,6 +30,11 @@ contract DTwitter {
         users[usernameHash].description = description;
     }
 
+    function userExists(string username) public view returns (bool) {
+        bytes32 usernameHash = keccak256(abi.encodePacked(username));
+        return users[usernameHash].creationDate != 0;
+    }
+
     function updateProfilePicture(string username, string pictureHash) public {
         bytes32 usernameHash = keccak256(abi.encodePacked(username));
         require(users[usernameHash].owner == msg.sender);
@@ -56,7 +61,7 @@ contract DTwitter {
 
     function getTweet(string username, uint index) public view returns(string retTweet) {
         bytes32 usernameHash = keccak256(abi.encodePacked(username));
-
+        require(users[usernameHash].creationDate != 0);
         return users[usernameHash].tweets[index];
     }
 

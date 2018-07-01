@@ -1,69 +1,21 @@
-<html>
-  <head>
-    <title>Demo</title>
-    <link rel="stylesheet" href="css/app.css">
-    <script src="js/app.js"></script>
-  </head>
-  <body class="container">
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="viewUser row">
-        <div class="left col-md-4">
-          <input name="username" placeholder="profile username"/><button class="viewUsername btn btn-primary">view profile</button> 
-        </div>
-        <div class="right col-md-8" align="right">
-          <span class="createLink btn btn-primary">create account</span>
-        </div>
-      </div>
-    </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <title>Decentralised Twitter dApp for DappCon 2018!</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="css/app.css" rel="stylesheet">
+</head>
 
-    <div class="main">
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <script type="text/javascript" src="js/app.js"></script>
+</body>
 
-    <div class="row createProfileView">
-        <div id="create-profile">
-          <strong>username: </strong><input type="text" class="form-control name" name="username">
-          <strong>description: </strong><input type="text" class="form-control description" name="description">
-          <button class="createProfile set btn btn-primary">create</button>
-        </div>
-    </div>
-
-    <div class="row profileView">
-
-      <div class="left col-md-4">
-        <div id="profile"><img alt="Username" />
-          <div class="profile-name">username</div>
-          <div class="profile-description">..Description..</div>
-        </div>
-
-        <span class="editLink">edit</span>
-
-        <div id="edit-profile-info">
-          <div id="edit-profile">
-            <strong>Edit Profile Description</strong>
-            <input type="text" class="form-control description" name="description">
-            <button class="editProfile set btn btn-primary">update description</button>
-          </div>
-
-          <div id="edit-profile-photo">
-            <strong>Upload Photo</strong>
-            <input type="file" class="form-control">
-            <button class="uploadFile set btn btn-primary">upload</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="right col-md-8">
-        <div id="doTweet">
-          <input type="text" class="form-control name" name="text" placeholder="type text to be tweeted">
-          <button class="set btn btn-primary">tweet</button>
-        </div>
-
-        <div id="tweets">
-          <div class="tweet"></div>
-        </div>
-      </div>
-    </div>
-    </div>
-
-  </body>
 </html>
