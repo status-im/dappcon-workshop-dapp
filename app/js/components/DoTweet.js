@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import React from 'react';
+import React, { Component } from 'react';
+import DTwitter from 'Embark/contracts/DTwitter';
 
 // The Header creates links that can be used to navigate
 // between routes.
-class DoTweet extends React.Component{
+class DoTweet extends Component{
   constructor(props, context) {
     super(props, context);
 

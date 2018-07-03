@@ -1,4 +1,6 @@
-
+.header{
+  border-bottom:1px solid #424242;
+}
 .logs {
   background-color: black;
   font-size: 14px;

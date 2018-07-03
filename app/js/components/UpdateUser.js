@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import DTwitter from 'Embark/contracts/DTwitter';
 
-class UpdateUser extends React.Component{
+class UpdateUser extends Component{
 
 }
 

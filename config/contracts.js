@@ -19,7 +19,8 @@ module.exports = {
       DTwitter: {
         args: [ ]
       }
-    }
+    },
+    gasLimit: 9000000
   },
   testnet: {
     deployment:{

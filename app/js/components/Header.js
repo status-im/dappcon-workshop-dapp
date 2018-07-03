@@ -1,92 +1,63 @@
-import { Link, withRouter } from 'react-router-dom'
-import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import React from 'react';
+import { withRouter } from 'react-router-dom'
+import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Grid, Row, Col, Thumbnail } from 'react-bootstrap';
+import React, { Component } from 'react';
+import EmbarkJS from 'Embark/EmbarkJS';
 
 // The Header creates links that can be used to navigate
 // between routes.
-class Header extends React.Component{
+class Header extends Component{
   constructor(props, context) {
     super(props, context);
 
     // event bindings
     this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
 
-    // initial state
     this.state = {
-      username: '',
-      usernameHasChanged: false
-    };
+      user: {}
+    }
   }
 
   componentDidMount(){
-    //this.setState({username: this.props.match.username});
+    let self = this;
+    // setTimeout(
+    // EmbarkJS.onReady(function(){
+    //   DTwitter.methods.users("0xc1671a7151e1edce1c1199a5d6db723cf1b0815d5f42c3e782581dde347530d6").call().then((user) => {
+    //     user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+    //     self.setState({user: user});
+    //   }).catch(console.error);
+    // }), 10000);
   }
 
   /**
    * Events
    */
-  handleClick(e) {
-    console.log('handling click, validations state = ' + this.getValidationState());
-    if(this.getValidationState() === 'error'){
-      return e.preventDefault();
-    }
-    this.props.history.push('/@' + this.state.username);
-  }
-
-  handleChange(e) {
-    let state = {usernameHasChanged: true};
-    state[e.target.name] = e.target.value;
-    this.setState(state);
-  }
-
-  /**
-   * Helper methods
-   */
-  getValidationState() {
-    return (this.state.username === '' && !this.state.usernameHasChanged) || this.state.username.length > 0 ? null : 'error';
+  handleClick(e){
+    this.props.history.push('/create');
   }
 
   render(){
-
-    let validationState = this.getValidationState();
-    let isValid = validationState !== 'error';
-
+    const {picture, username, description} = this.state.user;
+    const isEditable = Boolean(username);
+    let rendering = <Button onClick={this.handleClick} bsStyle="primary">Create user</Button>
+    if(isEditable){
+      rendering = <Thumbnail src={picture} alt={username} href={isEditable ? '/update/@' + username : ''}>
+        <h3>{username}</h3>
+        <p>{description}</p>
+      </Thumbnail>;
+    }
     return (
-      <form>
-        <Link to='/create'>Create user</Link>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={validationState}
-        >
-          <FormControl
-            type="text"
-            value={this.state.username}
-            placeholder="@username"
-            onChange={this.handleChange}
-            name="username"
-          />
-          <Button
-            bsStyle="primary"
-            disabled={!isValid}            
-            onClick={!isValid ? null : this.handleClick}
-
-          >Get tweets</Button>
-          <FormControl.Feedback />
-        </FormGroup>
-      </form>
+      <header>
+        <Grid>
+          <Row>
+            <Col xs={10}>
+            </Col>
+            <Col xs={2}>
+              {rendering}
+            </Col>
+          </Row>
+        </Grid>
+      </header>
     );
   }
-// const Header = () => (
-//   <header>
-//     <nav>
-//       <ul>
-//         <li><Link to='/'>Home</Link></li>
-//         <li><Link to='/create'>Create user</Link></li>
-//       </ul>
-//       <input type="text" placeholder="@username"/><button id="btnGetUserTweets">Get Tweets</button>
-//     </nav>
-//   </header>
-// )
 }
 export default withRouter(Header)

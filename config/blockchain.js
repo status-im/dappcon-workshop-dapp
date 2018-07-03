@@ -16,7 +16,7 @@ module.exports = {
     account: {
       password: "config/development/password"
     },
-    targetGasLimit: 8000000,
+    targetGasLimit: 10000000,
     wsOrigins: "auto",
     wsRPC: true,
     wsHost: "localhost",

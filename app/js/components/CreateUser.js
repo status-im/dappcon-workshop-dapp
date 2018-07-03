@@ -1,8 +1,9 @@
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
-import React from 'react';
+import React, { Component } from 'react';
+import DTwitter from 'Embark/contracts/DTwitter';
 
-class CreateUser extends React.Component {
+class CreateUser extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -15,8 +16,8 @@ class CreateUser extends React.Component {
       isLoading: false,
       username: '',
       description: '',
-      userExists: false,
-      usernameHasChanged: false
+      usernameHasChanged: false,
+      error: ''
     };
   }
 
@@ -25,17 +26,15 @@ class CreateUser extends React.Component {
    */
   handleClick() {
     this.setState({ isLoading: true });
-    EmbarkJS.onReady(() => {
-      console.log('creating account with username = ' + this.state.username + ', and description = ' + this.state.description);
-      DTwitter.methods.createAccount(this.state.username, this.state.description).send({ gas: 800000 }).then(() => {
-        console.log('account created event fired: ' + JSON.stringify(event));
-        // Completed of async action, set loading state back
-        this.setState({ isLoading: false });
-        this.props.history.push('/@' + this.state.username);
-      }).catch((err) => {
-        console.error(err);
-        this.setState({ isLoading: false, error: err.message });
-      });
+    console.log('creating account with username = ' + this.state.username + ', and description = ' + this.state.description);
+    return DTwitter.methods.createAccount(this.state.username, this.state.description).send({gas: 200000}).then(() => {
+      console.log('account created event fired: ' + JSON.stringify(event));
+      // Completed of async action, set loading state back
+      this.setState({ isLoading: false });
+      this.props.history.push('/@' + this.state.username);
+    }).catch((err) => {
+      console.error(err);
+      this.setState({ isLoading: false, error: err.message });
     });
   }
 
@@ -53,23 +52,22 @@ class CreateUser extends React.Component {
         DTwitter.methods.userExists(value).call().then((exists) => {
           console.log(`response username '${value}' exists: ${exists}`);
           state.isLoading = false;
-          state.userExists = exists;
+          state.error = exists ? 'Username not available' : '';
           this.setState(state);
 
         }).catch((err) => {
           console.error(err);
           state.isLoading = false;
-          state.userExists = exists;
           state.error = err.message;
           this.setState(state);
         });
-        console.log('sent async username check, setting isLoading is true');
+        
         // set loading state while checking the contract
-        return this.setState({ isLoading: true });
+        state.isLoading = true;
       }
 
       // we are loading already, do nothing while we wait
-      return;
+      return true;
     }
 
     this.setState(state);
@@ -85,7 +83,7 @@ class CreateUser extends React.Component {
     if(length === 0 && !this.state.usernameHasChanged) return null;
     if (length <= 5) return 'error';
 
-    return this.state.userExists ? 'error' : 'success';
+    return this.state.error.length > 0 ? 'error' : 'success';
   }
 
   /**
@@ -95,6 +93,7 @@ class CreateUser extends React.Component {
     const { isLoading } = this.state;
     let validationState = this.getValidationState();
     let isValid = validationState !== 'error';
+    let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters.';
 
     return (
       <form>
@@ -110,6 +109,7 @@ class CreateUser extends React.Component {
             placeholder="@username"
             onChange={this.handleChange}
             name="username"
+            autoComplete="off"
           />
           <FormControl
             type="text"
@@ -126,7 +126,7 @@ class CreateUser extends React.Component {
             {isLoading ? 'Loading...' : 'Create user'}
           </Button>
           <FormControl.Feedback />
-          <HelpBlock>{this.state.error || 'Usernames must be 5 or more characters.'}</HelpBlock>
+          <HelpBlock>{feedback}</HelpBlock>
         </FormGroup>
       </form>
     );

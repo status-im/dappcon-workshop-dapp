@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import {Grid, Row, Col, Thumbnail, ListGroup, ListGroupItem } from 'react-bootstrap';
-import React from 'react';
+import React, { Component } from 'react';
+import DTwitter from 'Embark/contracts/DTwitter';
 import imgAvatar from '../../img/avatar-default.png';
 import DoTweet from './DoTweet';
+import EmbarkJS from 'Embark/EmbarkJS';
 
 // The Player looks up the player using the number parsed from
 // the URL's pathname. If no player is found with the given
 // number, then a "player not found" message is displayed.
-class UserTweets extends React.Component {
+class UserTweets extends Component {
   
   constructor(props, context){
     super(props, context);
@@ -20,24 +22,26 @@ class UserTweets extends React.Component {
 
   componentDidMount(){
     const self = this;
-    EmbarkJS.onReady(() => {
+    EmbarkJS.onReady(function(){
       // get user details and update state
-      DTwitter.methods.users(web3.utils.keccak256(this.props.match.params.username)).call().then((user) => {
+      return DTwitter.methods.users(web3.utils.keccak256(self.props.match.params.username)).call().then((user) => {
         user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
         console.log('user: ' + JSON.stringify(user));
-        this.setState({user: user});
+        self.setState({user: user});
       }).catch(console.error);
-
+    });
+    EmbarkJS.onReady(() => {
       // so we can check our current node accounts to see if we are the owner of this account
-      web3.eth.getAccounts().then((accounts) => {
+      return web3.eth.getAccounts().then((accounts) => {
         console.log('got accounts: ' + accounts);
         if(accounts.length){
-          this.setState({account: accounts[0]});
+          self.setState({account: accounts[0]});
         }
       }).catch(console.error);
-
+    });
+    EmbarkJS.onReady(function(){
       // subscribe to tweet events
-      DTwitter.events.NewTweet({_from: web3.utils.keccak256(this.props.match.params.username), fromBlock: 0})
+      return DTwitter.events.NewTweet({_from: web3.utils.keccak256(self.props.match.params.username), fromBlock: 0})
       .on('data', function (event){
         console.log('new tweet event fired: ' + JSON.stringify(event));
         let index = parseInt(event.returnValues.index);
@@ -69,7 +73,7 @@ class UserTweets extends React.Component {
       // Render loading state ...
       return (<div>Loading...</div>);
     } else if (user.username === ''){
-      return (<div>User doesn't exist!</div>);  
+      return (<div><strong>{this.props.match.params.username}</strong> doesn't exist!</div>);  
     }else {
       // Render real UI ...
       const {username, description, picture} = this.state.user;

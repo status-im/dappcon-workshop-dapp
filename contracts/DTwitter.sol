@@ -12,6 +12,7 @@ contract DTwitter {
     }
 
     mapping (bytes32 => User) public users;
+    mapping (address => bytes32) public owners;
 
     event NewTweet(
         bytes32 indexed _from,
@@ -24,10 +25,15 @@ contract DTwitter {
         // reject if username already registered
         require(users[usernameHash].creationDate == 0);
 
+        // reject if sending adddress already created a user
+        require(owners[msg.sender] == 0);
+
         users[usernameHash].creationDate = now;
         users[usernameHash].owner = msg.sender;
         users[usernameHash].username = username;
         users[usernameHash].description = description;
+
+        owners[msg.sender] = usernameHash;
     }
 
     function userExists(string username) public view returns (bool) {
