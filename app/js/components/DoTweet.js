@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import React, { Component } from 'react';
-import DTwitter from 'Embark/contracts/DTwitter';
 
 // The Header creates links that can be used to navigate
 // between routes.

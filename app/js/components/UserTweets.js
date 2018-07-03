@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
 import {Grid, Row, Col, Thumbnail, ListGroup, ListGroupItem } from 'react-bootstrap';
 import React, { Component } from 'react';
-import DTwitter from 'Embark/contracts/DTwitter';
 import imgAvatar from '../../img/avatar-default.png';
-import DoTweet from './DoTweet';
-import EmbarkJS from 'Embark/EmbarkJS';
 
 // The Player looks up the player using the number parsed from
 // the URL's pathname. If no player is found with the given
@@ -22,26 +19,29 @@ class UserTweets extends Component {
 
   componentDidMount(){
     const self = this;
-    EmbarkJS.onReady(function(){
-      // get user details and update state
-      return DTwitter.methods.users(web3.utils.keccak256(self.props.match.params.username)).call().then((user) => {
-        user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-        console.log('user: ' + JSON.stringify(user));
-        self.setState({user: user});
-      }).catch(console.error);
-    });
-    EmbarkJS.onReady(() => {
-      // so we can check our current node accounts to see if we are the owner of this account
-      return web3.eth.getAccounts().then((accounts) => {
-        console.log('got accounts: ' + accounts);
-        if(accounts.length){
-          self.setState({account: accounts[0]});
-        }
-      }).catch(console.error);
-    });
-    EmbarkJS.onReady(function(){
+
+    EmbarkJS.onReady((err) => {
+      this._getUserDetails();
+
       // subscribe to tweet events
-      return DTwitter.events.NewTweet({_from: web3.utils.keccak256(self.props.match.params.username), fromBlock: 0})
+      this._subscribeToNewTweetEvent();
+    });
+  }
+
+  _getUserDetails = async() => {
+      // get user details and update state
+      let user = await DTwitter.methods.users(web3.utils.keccak256(this.props.params.username)).call();//.then((user) => {
+        user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+        //console.log('user: ' + JSON.stringify(user));
+        this.setState({user: user, account: web3.eth.defaultAccount});
+      //}).catch(console.error);
+
+  }
+
+  _subscribeToNewTweetEvent(){
+    const self = this;
+
+    DTwitter.events.NewTweet({_from: web3.utils.keccak256(self.props.params.username), fromBlock: 0})
       .on('data', function (event){
         console.log('new tweet event fired: ' + JSON.stringify(event));
         let index = parseInt(event.returnValues.index);
@@ -51,7 +51,7 @@ class UserTweets extends Component {
           let tweets = self.state.tweets;
           tweets.push(tweet);
           self.setState({tweets: tweets});
-
+          return null;
         }).catch(function(error){
           console.error('error getting tweet at index ' + index, error);
         });
@@ -62,7 +62,6 @@ class UserTweets extends Component {
       .on('error', function(error){
         console.error('error occurred with tweet event: ', error);
       });
-    });
   }
 
   render(){
@@ -88,7 +87,7 @@ class UserTweets extends Component {
                 <h3>{username}</h3>
                 <p>{description}</p>
               </Thumbnail>
-              <DoTweet username={username} visible={isEditable}></DoTweet>
+              
             </Col>
             <Col xs={12} md={8}>
               <ListGroup>

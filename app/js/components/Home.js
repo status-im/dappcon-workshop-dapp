@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import DTwitter from 'Embark/contracts/DTwitter';
 import {Grid, Row, Col, FormGroup, FormControl, Button} from 'react-bootstrap';
 
 class Home extends Component{

@@ -41,18 +41,12 @@ contract DTwitter {
         return users[usernameHash].creationDate != 0;
     }
 
-    function updateProfilePicture(string username, string pictureHash) public {
-        bytes32 usernameHash = keccak256(abi.encodePacked(username));
-        require(users[usernameHash].owner == msg.sender);
-
-        users[usernameHash].picture = pictureHash;
-    }
-
-    function editAccount(string username, string description) public {
+    function editAccount(string username, string description, string pictureHash) public {
         bytes32 usernameHash = keccak256(abi.encodePacked(username));
         require(users[usernameHash].owner == msg.sender);
 
         users[usernameHash].description = description;
+        users[usernameHash].picture = pictureHash;
     }
 
     function tweet(string username, string content) public {

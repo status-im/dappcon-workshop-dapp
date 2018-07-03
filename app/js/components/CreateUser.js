@@ -1,7 +1,7 @@
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react';
-import DTwitter from 'Embark/contracts/DTwitter';
+import FieldGroup from './FieldGroup';
 
 class CreateUser extends Component {
   constructor(props, context) {
@@ -26,11 +26,13 @@ class CreateUser extends Component {
    */
   handleClick() {
     this.setState({ isLoading: true });
-    console.log('creating account with username = ' + this.state.username + ', and description = ' + this.state.description);
     return DTwitter.methods.createAccount(this.state.username, this.state.description).send({gas: 200000}).then(() => {
-      console.log('account created event fired: ' + JSON.stringify(event));
       // Completed of async action, set loading state back
       this.setState({ isLoading: false });
+      
+      // tell our parent to re-render with new user
+      this.props.onAction();
+
       this.props.history.push('/@' + this.state.username);
     }).catch((err) => {
       console.error(err);
@@ -39,35 +41,38 @@ class CreateUser extends Component {
   }
 
   handleChange(e) {
-    let state = {usernameHasChanged: true};
+    let state = {};
     const input = e.target.name;
     const value = e.target.value;
 
     state[input] = value;
-    console.log('this.state = ' + JSON.stringify(this.state));
-    if (input === 'username' && value.length >= 5) {
-      // not loading, check username doesn't exist
-      if (!this.state.isLoading) {
-        console.log('checking if username exists: ' + value);
-        DTwitter.methods.userExists(value).call().then((exists) => {
-          console.log(`response username '${value}' exists: ${exists}`);
-          state.isLoading = false;
-          state.error = exists ? 'Username not available' : '';
-          this.setState(state);
 
-        }).catch((err) => {
-          console.error(err);
-          state.isLoading = false;
-          state.error = err.message;
-          this.setState(state);
-        });
-        
-        // set loading state while checking the contract
-        state.isLoading = true;
+    if (input === 'username'){
+      
+      state.usernameHasChanged = true;
+
+      if(value.length >= 5) {
+        // not loading, check username doesn't exist
+        if (!this.state.isLoading) {
+          DTwitter.methods.userExists(value).call().then((exists) => {
+            state.isLoading = false;
+            state.error = exists ? 'Username not available' : '';
+            this.setState(state);
+
+          }).catch((err) => {
+            console.error(err);
+            state.isLoading = false;
+            state.error = err.message;
+            this.setState(state);
+          });
+          
+          // set loading state while checking the contract
+          state.isLoading = true;
+        }
+
+        // we are loading already, do nothing while we wait
+        return true;
       }
-
-      // we are loading already, do nothing while we wait
-      return true;
     }
 
     this.setState(state);
@@ -97,12 +102,7 @@ class CreateUser extends Component {
 
     return (
       <form>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={validationState}
-        >
-          <ControlLabel>Enter desired username</ControlLabel>
-          <FormControl
+          <FieldGroup
             type="text"
             value={this.state.username}
             disabled={isLoading}
@@ -110,13 +110,16 @@ class CreateUser extends Component {
             onChange={this.handleChange}
             name="username"
             autoComplete="off"
+            label="Desired username"
+            validationState={validationState}
           />
-          <FormControl
+          <FieldGroup
             type="text"
             value={this.state.description}
             placeholder="description"
             onChange={this.handleChange}
             name="description"
+            label="Description"
           />
           <Button
             bsStyle="primary"
@@ -125,9 +128,7 @@ class CreateUser extends Component {
           >
             {isLoading ? 'Loading...' : 'Create user'}
           </Button>
-          <FormControl.Feedback />
           <HelpBlock>{feedback}</HelpBlock>
-        </FormGroup>
       </form>
     );
   }

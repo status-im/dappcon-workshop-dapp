@@ -1,24 +1,29 @@
-import { Switch, Route } from 'react-router-dom'
-import Home from './Home'
-import UserTweets from './UserTweets'
-import CreateUser from './CreateUser'
-import UpdateUser from './UpdateUser'
-import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import PropsRoute from './PropsRoute';
+import Home from './Home';
+import UserTweets from './UserTweets';
+import CreateUser from './CreateUser';
+import UpdateUser from './UpdateUser';
+import React, { Component } from 'react';
 
-// The Main component renders one of the three provided
-// Routes (provided that one matches). Both the /roster
-// and /schedule routes will match any pathname that starts
-// with /roster or /schedule. The / route will only match
-// when the pathname is exactly the string "/"
-const Main = () => (
-  <main>
-    <Switch>
-      <Route exact path='/' component={Home}/>
-      <Route path='/@:username' component={UserTweets}/>
-      <Route path='/create' component={CreateUser}/>
-      <Route path='/update/@:username' component={UpdateUser}/>
-    </Switch>
-  </main>
-)
+class Main extends Component {
+
+  constructor(props){
+    super(props);
+  }
+
+  render () {
+    return (
+      <main>
+        <Switch>
+          <Route exact path='/' component={Home}/>
+          <PropsRoute path='/@:username' component={UserTweets} user={this.props.user} {...this.props}/>
+          <PropsRoute path='/create' component={CreateUser} onAction={this.props.onAction} {...this.props}/>
+          <PropsRoute path='/update/@:username' component={UpdateUser} onAction={this.props.onAction} user={this.props.user} {...this.props}/>
+        </Switch>
+      </main>
+    )
+  }
+}
 
 export default Main
