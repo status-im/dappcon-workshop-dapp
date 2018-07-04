@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import React, { Component } from 'react';
+import FieldGroup from './FieldGroup';
 
 // The Header creates links that can be used to navigate
 // between routes.
@@ -8,20 +9,12 @@ class DoTweet extends Component{
   constructor(props, context) {
     super(props, context);
 
-    // properties pass-through
-  const { username, visible } = props;
-  console.log('Do Tweet: username = '+ username + ', visible = ' + visible);
-
-    // event bindings
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
     // initial state
     this.state = {
-      visible: visible,
-      username: username,
       tweet: '',
-      tweetHasChanged: false
+      tweetHasChanged: false,
+      isLoading: false,
+      error: ''
     };
   }
 
@@ -32,13 +25,27 @@ class DoTweet extends Component{
   /**
    * Events
    */
-  handleClick(e) {
+  handleClick = async (e) => {
     if(this.getValidationState() === 'error'){
       return e.preventDefault();
     }
     
+    this.setState({ isLoading: true });
+
     // send tweet to the contract
-    DTwitter.methods.tweet(this.props.username, this.state.tweet).send({gas: 800000});
+    const { tweet } = DTwitter.methods;
+    try{
+      const gasEstimate = await tweet(this.props.username, this.state.tweet).estimateGas();
+
+      await tweet(this.props.username, this.state.tweet).send({gas: gasEstimate});
+
+      this.setState({ isLoading: false });
+
+      this.props.onAfterTweet();
+    }
+    catch(err){
+      this.setState({ isLoading: false, error: err.message });
+    }
   }
 
   handleChange(e) {
@@ -58,31 +65,35 @@ class DoTweet extends Component{
     // hide when not visible
     if(!this.props.visible) return null; 
 
-    let validationState = this.getValidationState();
-    let isValid = validationState !== 'error';
+    const validationState = this.getValidationState();
+    const isValid = validationState !== 'error';
+    const { isLoading, error, tweet } = this.state;
 
+    let feedback = !isValid ? 'Tweet must be 140 characters or less' : '';
+    if(this.state.error) feedback = error;
 
     return (
       <form>
+        <FieldGroup
+          type="text"
+          value={ tweet }
+          placeholder="140 characters or less..."
+          onChange={ (e) => this.handleChange(e) }
+          name="tweet"
+          componentClass="textarea"
+          hasFeedback={true}
+          validationState={validationState}
+        />
+        <Button
+          bsStyle="primary"
+          disabled={ !isValid && !error }            
+          onClick={ (!isValid && !error) ? null : (e) => this.handleClick(e) }
+        >{isLoading ? 'Loading...' : 'Post tweet'}</Button>
         <FormGroup
           controlId="formBasicText"
-          validationState={validationState}
+          validationState={ validationState }
         >
-          <FormControl
-            type="text"
-            value={this.state.tweet}
-            placeholder="140 characters or less..."
-            onChange={this.handleChange}
-            name="tweet"
-            componentClass="textarea"
-            maxLength="140"
-          />
-          <Button
-            bsStyle="primary"
-            disabled={!isValid}            
-            onClick={!isValid ? null : this.handleClick}
-          >Post tweet</Button>
-          <FormControl.Feedback />
+          <HelpBlock>{ feedback }</HelpBlock>
         </FormGroup>
       </form>
     );

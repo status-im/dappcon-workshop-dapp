@@ -3,7 +3,7 @@
     "contracts": {
       "0x1797453304e4b69b44fb7d649a72ca80394a8b4e1d14c2cc530f5dc3ae1f0ea3": {
         "name": "ENSRegistry",
-        "address": "0x71b827521d18bE9D9af5985989f655919734b778"
+        "address": "0xD9EE4954CCEC40d4Ab7dc8Dbb939480E10C50DE3"
       },
       "0xb120f3408a101ce86f74b61525041fe8746a81e8ce4ec45a453e9d62e7d32607": {
         "name": "DTwitter",
@@ -39,7 +39,27 @@
       },
       "0xd537e19d8c6e6455117aa567a260d6da3dfbc7b82bb9f8af3840364628bd87a2": {
         "name": "DTwitter",
-        "address": "0xb52439BB26919e5bBb59C374cAd74d00DF70A766"
+        "address": "0x50147d50b6AdAaEc2770534197C8AbB41f9996CD"
+      },
+      "0x31166ef9b2073d43bdfc9a0843d17915a4baa89e757cf2bebdfa96762c149ab2": {
+        "name": "FIFSRegistrar",
+        "address": "0x0e7d594C42F6645ff4B233CFe304097CF0921f3C"
+      },
+      "0x3f1eda2b51437c5336d0f0ef1a91b677dd2d3cb6390c458e9dd20db6bac3c8b9": {
+        "name": "DTwitter",
+        "address": "0x14a2D13A517FF88761c4cF25cD9a9854B98e1Ea7"
+      },
+      "0x3fcb63a8374c8392fea80cc7102bda53124f1a3fc50aa66668d3e7ba5b0fb593": {
+        "name": "DTwitter",
+        "address": "0x5501eDB98F0B22C96C686c31D5999F4f6c521380"
+      },
+      "0x3cfbff3c09714a829b7a8b5f26736b20098dc29b1eed0121c8a59764b4f2d859": {
+        "name": "FIFSRegistrar",
+        "address": "0xf372975f1381d4C5d54b698330F44F1797AF47Ba"
+      },
+      "0x5d4296f4d7901d9c9c6879c48dfa8cd7e6c2696a343bd09e6ef1fdf3af61ca06": {
+        "name": "FIFSRegistrar",
+        "address": "0x135A54701Db24dA0aF7ce5fAce9af8bAd917a764"
       }
     }
   }

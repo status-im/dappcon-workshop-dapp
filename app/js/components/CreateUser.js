@@ -24,20 +24,29 @@ class CreateUser extends Component {
   /**
    * Events
    */
-  handleClick() {
+  handleClick = async () => {
+
     this.setState({ isLoading: true });
-    return DTwitter.methods.createAccount(this.state.username, this.state.description).send({gas: 200000}).then(() => {
+    const { username, description } = this.state;
+    const gasEstimate = await DTwitter.methods.createAccount(username, description).estimateGas();
+    
+    try{
+      const result = await DTwitter.methods.createAccount(username, description).send({gas: gasEstimate + 1000});
+      
+      if(result.status !== '0x1'){
+        return this.setState({ isLoading: false, formState: 'error', error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+      }
+
       // Completed of async action, set loading state back
       this.setState({ isLoading: false });
       
       // tell our parent to re-render with new user
       this.props.onAction();
 
-      this.props.history.push('/@' + this.state.username);
-    }).catch((err) => {
-      console.error(err);
+      this.props.history.push('/@' + username);
+    } catch(err) {
       this.setState({ isLoading: false, error: err.message });
-    });
+    };
   }
 
   handleChange(e) {
@@ -99,7 +108,9 @@ class CreateUser extends Component {
     let validationState = this.getValidationState();
     let isValid = validationState !== 'error';
     let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters.';
-
+    
+    if(!this.state.usernameHasChanged) feedback = '';
+    
     return (
       <form>
           <FieldGroup
@@ -112,6 +123,8 @@ class CreateUser extends Component {
             autoComplete="off"
             label="Desired username"
             validationState={validationState}
+            hasFeedback={true}
+            help={feedback}
           />
           <FieldGroup
             type="text"
@@ -123,12 +136,11 @@ class CreateUser extends Component {
           />
           <Button
             bsStyle="primary"
-            disabled={isLoading || !isValid}
-            onClick={(isLoading || !isValid) ? null : this.handleClick}
+            disabled={isLoading || (!isValid && !this.state.error)}
+            onClick={(isLoading || (!isValid && !this.state.error)) ? null : this.handleClick}
           >
             {isLoading ? 'Loading...' : 'Create user'}
           </Button>
-          <HelpBlock>{feedback}</HelpBlock>
       </form>
     );
   }

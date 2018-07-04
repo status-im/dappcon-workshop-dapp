@@ -7,52 +7,57 @@ class UpdateUser extends Component {
   constructor(props, context) {
     super(props, context);
 
-    // event bindings
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
     // initial state
     this.state = {
       isLoading: false,
       picture: '',
       description: this.props.user.description,
-      usernameHasChanged: false,
       error: '',
-      formState: null
+      formState: null,
+      formUpdated: false
     };
   }
 
   /**
    * Events
    */
-  handleClick() {
+  handleClick = async () => {
+    this.setState({ isLoading: true });
+
+    if(!this.state.formUpdated) return; // no form update => do nothing
+
+    let hash = '';
     if (this.state.picture !== '') {
-      this.setState({ isLoading: true });
-
-      EmbarkJS.Storage.uploadFile([this.inputPicture]).then((hash) => {
-
-        DTwitter.methods.editAccount(this.props.user.username, this.state.description, hash).send().then(() => {
-          this.setState({ isLoading: false, formState: 'success' });
-          // tell parent we've got an updated user
-          return this.props.onAction();
-        }).catch((err) => {
-          console.error(err);
-          this.setState({ isLoading: false, error: err.message });
-        });
-
-        return null;
-
-      }).catch((err) => {
-        console.error(err);
-        this.setState({ isLoading: false, error: err.message });
-      });
+      try{
+        hash = await EmbarkJS.Storage.uploadFile([this.inputPicture]);
+      }
+      catch(err){
+        return this.setState({ isLoading: false, formState: 'error', error: err.message });
+      }
     }
+
+    const gasEstimate = await DTwitter.methods.editAccount(this.props.user.username, this.state.description, hash).estimateGas();
+
+    try{
+      const result = await DTwitter.methods.editAccount(this.props.user.username, this.state.description, hash).send({gas: gasEstimate});
+      if(result.status !== '0x1'){
+        return this.setState({ isLoading: false, formState: 'error', error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+      }
+
+      this.setState({ isLoading: false, formState: 'success' });
+
+      // tell parent we've got an updated user
+      return this.props.onAction();
+    }
+    catch(err){
+      this.setState({ isLoading: false, formState: 'error', error: err.message });
+    }    
 
     return null;
   }
 
   handleChange(e) {
-    let state = {};
+    let state = {formUpdated: true};
     const input = e.target.name;
     const value = e.target.value;
 
@@ -61,61 +66,52 @@ class UpdateUser extends Component {
     this.setState(state);
   }
 
-  FieldGroup = ({ id, label, help, ...props }) => {
-    return (
-      <FormGroup controlId={id}>
-        <ControlLabel>{label}</ControlLabel>
-        <FormControl {...props} />
-        {help && <HelpBlock>{help}</HelpBlock>}
-      </FormGroup>
-    );
-  }
-
   /**
    * React methods
    */
   render() {
-    const { isLoading } = this.state;
-    const feedback = this.state.formState === 'success' ? 'Saved' : '';
+    const { isLoading, error, formState, description, picture } = this.state;
+    const { user } = this.props;
+    const feedback = formState === 'success' ? 'Saved' : error;
     return (
       <form>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={this.state.formState}
+        <FieldGroup
+          type="text"
+          value={ user.username }
+          disabled={true}
+          name="username"
+          label="Username"
+        />
+        <FieldGroup
+          type="text"
+          value={ description }
+          placeholder="description"
+          onChange={ (e) => this.handleChange(e) }
+          name="description"
+          label="Description"
+          validationState={ formState }
+        />
+        <FieldGroup
+          type="file"
+          value={ picture }
+          onChange={ (e) => this.handleChange(e) }
+          name="picture"
+          label="Profile picture"
+          inputRef={ (input) => this.inputPicture = input }
+          validationState={ formState }
+        />
+        { user.picture.length ? <Image src={ user.picture } width="100" circle /> : '' }
+        <Button
+          bsStyle="primary"
+          disabled={ isLoading }
+          onClick={ isLoading ? null : (e) => this.handleClick(e) }
         >
-          <FieldGroup
-            type="text"
-            value={this.props.user.username}
-            disabled={true}
-            name="username"
-            label="Username"
-          />
-          <FieldGroup
-            type="text"
-            value={this.state.description}
-            placeholder="description"
-            onChange={this.handleChange}
-            name="description"
-            label="Description"
-          />
-          <FieldGroup
-            type="file"
-            value={this.state.picture}
-            onChange={this.handleChange}
-            name="picture"
-            label="Profile picture"
-            inputRef={(input) => this.inputPicture = input}
-          />
-          {this.props.user.picture.length ? <Image src={this.props.user.picture} width="100" circle /> : ''}
-          <Button
-            bsStyle="primary"
-            disabled={isLoading}
-            onClick={isLoading ? null : this.handleClick}
-          >
-            {isLoading ? 'Loading...' : 'Update profile'}
-          </Button>
-          <FormControl.Feedback />
-          <HelpBlock>{feedback}</HelpBlock>
+          { isLoading ? 'Loading...' : 'Update profile' }
+        </Button>
+        <FormGroup
+          validationState={ formState }
+        >
+          <HelpBlock>{ feedback }</HelpBlock>
         </FormGroup>
       </form>
     );

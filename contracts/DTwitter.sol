@@ -43,10 +43,13 @@ contract DTwitter {
 
     function editAccount(string username, string description, string pictureHash) public {
         bytes32 usernameHash = keccak256(abi.encodePacked(username));
+
         require(users[usernameHash].owner == msg.sender);
 
         users[usernameHash].description = description;
-        users[usernameHash].picture = pictureHash;
+        if (bytes(pictureHash).length > 0) {
+            users[usernameHash].picture = pictureHash;
+        }
     }
 
     function tweet(string username, string content) public {

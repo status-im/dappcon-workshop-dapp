@@ -5,7 +5,7 @@ import imgAvatar from '../../img/avatar-default.png';
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -13,27 +13,33 @@ class App extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     EmbarkJS.onReady(() => {
       setTimeout(() => { this._loadCurrentUser(); }, 0);
     });
   }
 
-  _loadCurrentUser = () => {
-    let self = this;
-    DTwitter.methods.owners(web3.eth.defaultAccount).call().then((usernameHash) => {
-      if(usernameHash){
-        DTwitter.methods.users(usernameHash).call().then((user) => {
-          user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-          console.log('got user details from contract: ' + JSON.stringify(user));
-          self.setState({user: user});
-        }).catch(console.error);
+  _loadCurrentUser = async () => {
+    const accounts = await web3.eth.getAccounts();
+    try {
+      const usernameHash = await DTwitter.methods.owners(accounts[0]).call();
+      if (usernameHash) {
+        // get user details from contract
+        const user = await DTwitter.methods.users(usernameHash).call();
+
+        // update user picture with ipfs url
+        user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+
+        // update state with user details
+        return this.setState({ user: user });
       }
-      return null;
-    });
+    }
+    catch (err) {
+      console.error('Error loading currenet user: ', err);
+    }
   }
 
-  render(){
+  render() {
     return (
       <div>
         <Header user={this.state.user} />

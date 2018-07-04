@@ -17,9 +17,9 @@ class Main extends Component {
       <main>
         <Switch>
           <Route exact path='/' component={Home}/>
-          <PropsRoute path='/@:username' component={UserTweets} user={this.props.user} {...this.props}/>
-          <PropsRoute path='/create' component={CreateUser} onAction={this.props.onAction} {...this.props}/>
-          <PropsRoute path='/update/@:username' component={UpdateUser} onAction={this.props.onAction} user={this.props.user} {...this.props}/>
+          <PropsRoute path='/@:username' component={UserTweets} {...this.props}/>
+          <PropsRoute path='/create' component={CreateUser} {...this.props}/>
+          <PropsRoute path='/update/@:username' component={UpdateUser} {...this.props}/>
         </Switch>
       </main>
     )
