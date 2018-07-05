@@ -2,9 +2,10 @@
   "contracts": ["contracts/**"],
   "app": {
     "css/app.css": ["app/css/**"],
-    "js/app.js": ["app/js/**"],
     "fonts": ["app/fonts/**"],
-    "index.html": "app/index.html"
+    "images/": ["app/images/**"],
+    "index.html": "app/index.html",
+    "js/app.js": ["app/js/dapp.js"]
   },
   "buildDir": "dist/",
   "config": "config/",
