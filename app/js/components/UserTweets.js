@@ -14,6 +14,7 @@ class UserTweets extends Component {
       user: {},
       tweets: []
     };
+    this.event = null;
   }
 
   componentDidMount(){
@@ -38,8 +39,7 @@ class UserTweets extends Component {
   _subscribeToNewTweetEvent(){
     const username = this.props.match.params.username;
 
-
-    DTwitter.events.NewTweet({_from: web3.utils.keccak256(username), fromBlock: 0})
+    this.event = DTwitter.events.NewTweet({_from: web3.utils.keccak256(username), fromBlock: 0})
       .on('data', (event) => {
         console.log('new tweet event fired: ' + JSON.stringify(event));
         let index = parseInt(event.returnValues.index);
@@ -60,6 +60,12 @@ class UserTweets extends Component {
       .on('error', function(error){
         console.error('error occurred with tweet event: ', error);
       });
+  }
+
+  componentWillUnmount() {
+    if (!this.event) return;
+    // TODO: check if this is the 'right' way to remove / stop the event listener
+    this.event.removeListener(this.event);
   }
 
   render(){
