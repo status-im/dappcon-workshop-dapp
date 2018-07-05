@@ -16,10 +16,12 @@ contract DTwitter {
 
     event NewTweet(
         bytes32 indexed _from,
-        uint index 
+        string tweet 
     );
 
     function createAccount(string username, string description) public {
+        require(bytes(username).length > 0);
+
         bytes32 usernameHash = keccak256(abi.encodePacked(username));
 
         // reject if username already registered
@@ -30,7 +32,7 @@ contract DTwitter {
 
         users[usernameHash].creationDate = now;
         users[usernameHash].owner = msg.sender;
-        users[usernameHash].username = username;
+        users[usernameHash].username = username; 
         users[usernameHash].description = description;
 
         owners[msg.sender] = usernameHash;
@@ -59,7 +61,7 @@ contract DTwitter {
         User storage user = users[usernameHash];
         uint tweetIndex = user.tweets.length++;
         user.tweets[tweetIndex] = content;
-        emit NewTweet(usernameHash, tweetIndex);
+        emit NewTweet(usernameHash, content);
     }
 
     function getTweet(string username, uint index) public view returns(string retTweet) {

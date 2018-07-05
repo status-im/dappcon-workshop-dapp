@@ -62,8 +62,6 @@ class DoTweet extends Component{
   }
 
   render(){
-    // hide when not visible
-    if(!this.props.visible) return null; 
 
     const validationState = this.getValidationState();
     const isValid = validationState !== 'error';

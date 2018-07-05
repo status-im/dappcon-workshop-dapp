@@ -31,7 +31,7 @@ class App extends Component {
         user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
 
         // update state with user details
-        return this.setState({ user: user });
+        return this.setState({ user: user, account: accounts[0] });
       }
     }
     catch (err) {
@@ -42,8 +42,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header user={this.state.user} />
-        <Main user={this.state.user} onAction={(e) => this._loadCurrentUser()} />
+        <Header user={ this.state.user } account={ this.state.account } />
+        <Main user={ this.state.user } account={ this.state.account } onAfterUserUpdate={ (e) => this._loadCurrentUser() } />
       </div>
     );
   }

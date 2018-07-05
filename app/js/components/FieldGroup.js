@@ -1,15 +1,28 @@
 import React from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
 
-const FieldGroup = ({ id, label, help, validationState, hasFeedback, ...props }) => {
-    return (
-        <FormGroup controlId={id} validationState={validationState}>
+const FieldGroup = ({ id, label, help, validationState, hasFeedback, inputAddOn, ...props }) => {
+
+  return (
+    <React.Fragment>
+      <FormGroup controlId={id} validationState={validationState}>
         <ControlLabel>{label}</ControlLabel>
-        <FormControl {...props} />
-        {hasFeedback ? <FormControl.Feedback/> : ''}
+        
+        { inputAddOn ? 
+          <InputGroup>
+            { inputAddOn.location === 'before' ? <InputGroup.Addon>{ inputAddOn.addOn }</InputGroup.Addon> : '' }
+            <FormControl {...props} />
+            { inputAddOn.location === 'after' ? <InputGroup.Addon>{ inputAddOn.addOn }</InputGroup.Addon> : '' }
+          </InputGroup>
+          :
+          <FormControl {...props} />
+        }
+        {hasFeedback ? <FormControl.Feedback /> : ''}
         {help && <HelpBlock>{help}</HelpBlock>}
-        </FormGroup>
-    );
+      </FormGroup>
+      
+    </React.Fragment>
+  );
 }
 
 export default FieldGroup;
