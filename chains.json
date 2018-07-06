@@ -14,5 +14,77 @@
         "address": "0xE7AfE25416C6869B148d0fF42FB8990Fb49a6F6f"
       }
     }
+  },
+  "0xf563b1fa29edfc897b6d2d041e684bf6f2da4ba38de4647bcaa2092ff6447bd2": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x857d7B774a231DFDc8556Fcdb826AE1323dF9363"
+      }
+    }
+  },
+  "0xff04da0c6a0d3bec232a318fe23a96112bf9dee4e73a5e186974bf3037edca8f": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x9F7050134e8A624e909F622DCC948911a2485CAb"
+      }
+    }
+  },
+  "0x680020bf8abd0e053ef5b1072904f405540fd8de5b9bd4cb8778429ae0d81187": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x4Ffcb881BD5A08977320D9Ed4117a5B3315d7Fe2"
+      }
+    }
+  },
+  "0xb910c985b5c422be26a22abc8b98f630c59c750043a85ce08ba57a00b027dc8d": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x2097400A013401326fAe31213345Af3F9cE29C7d"
+      }
+    }
+  },
+  "0x681dda007fc8fbd2b0e76a4210049c35b63898918c95d78ab2e581b190cf00f8": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0xB98F98a955f76E97d9c3005223D621E94FA83521"
+      }
+    }
+  },
+  "0x74c93c82c5ff4837a09d18ff547183e2fed670da6538bed9c7f5d74be39796e7": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0xFcD8c91B360F2623e808cF844F3ECF0E08b26a1A"
+      }
+    }
+  },
+  "0x7c491ceb527a3659410d3b760668f063e570b17113a8047ca7ec3ec598d83346": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x59a89dBE08162A940D7FE8C4d254Fa3E58aFdCe9"
+      }
+    }
+  },
+  "0xd732619dda54f0fbd09148d62d5816ba93b5ba811dbf2f9302e7f692bc6c8ee0": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x4a33Aa0105729ff1a8C7CF0AE4F63A770Eb4150c"
+      }
+    }
+  },
+  "0xbd0900c07d789e26828d3fbeb27fed162e0873f64dab4909c6847b17b1d1f0cb": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0xC7D8c27a32F21a179B79bA30148dEC68AC6C71D3"
+      }
+    }
   }
 }
