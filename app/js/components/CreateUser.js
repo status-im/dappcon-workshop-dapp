@@ -38,13 +38,14 @@ class CreateUser extends Component {
     this.setState({ isLoading: true });
     const { username, description } = this.state;
 
-    // set up our contract method with the input values from the form
-    const createAccount = DTwitter.methods.createAccount(username, description);
-
-    // get a gas estimate before sending the transaction
-    const gasEstimate = await createAccount.estimateGas();
-
     try {
+
+      // set up our contract method with the input values from the form
+      const createAccount = DTwitter.methods.createAccount(username, description);
+
+      // get a gas estimate before sending the transaction
+      const gasEstimate = await createAccount.estimateGas();
+
       // send the transaction to create an account with our gas estimate
       // (plus a little bit more in case the contract state has changed).
       const result = await createAccount.send({ from: this.props.account, gas: gasEstimate + 1000 });
@@ -94,23 +95,35 @@ class CreateUser extends Component {
 
         // ensure we're not already loading the last lookup
         if (!this.state.isLoading) {
-          
-          // set loading state while we check our contract
+
+          // call the userExists method in our contract asynchronously
+          DTwitter.methods.userExists(value).call().then((exists) => {
+            
+            // stop loading state
+            state.isLoading = false;
+
+            // show error to user if user doesn't exist
+            state.error = exists ? 'Username not available' : '';
+            
+            this.setState(state);
+
+          }).catch((err) => {
+            
+            // stop loading state
+            state.isLoading = false;
+
+            // show error message to user
+            state.error = err.message;
+
+            this.setState(state);
+          });
+
+          // set loading state while checking the contract
           state.isLoading = true;
-          this.setState({ state });
-
-          try{
-            // check if typed in username already exists in the user mapping of the contract
-            const exists = await DTwitter.methods.userExists(value).call();
-
-            return this.setState({ isLoading: false, error: exists ? 'Username not available' : '' });
-          }catch(err){
-            return this.setState({ isLoading: false, error: err.message });
-          };
         }
 
         // we are loading already, do nothing while we wait
-        return null;
+        return true;
       }
     }
 
@@ -133,7 +146,10 @@ class CreateUser extends Component {
 
     // check that we have at least 5 characters in the username
     const length = this.state.username.length;
-    if (length === 0 && !this.state.usernameHasChanged) return null;
+    if (length === 0){
+      if(this.state.usernameHasChanged) return 'error';
+      return null;
+    } 
     if (length <= 5) return 'error';
 
     // if we have an error, returning 'error' shows the user 
@@ -147,7 +163,7 @@ class CreateUser extends Component {
   render() {
     const { isLoading } = this.state;
     let validationState = this._getValidationState();
-    let isValid = validationState !== 'error';
+    let isValid = validationState === 'success' && !isLoading && !this.state.error;
     let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters.';
 
     if (!this.state.usernameHasChanged) feedback = '';
@@ -161,19 +177,19 @@ class CreateUser extends Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <form onSubmit={ (isLoading || (!isValid && !this.state.error) || !this.state.usernameHasChanged) ? null : (e) => this._handleClick(e) }>
+            <form onSubmit={ !isValid ? null : (e) => this._handleClick(e) }>
               <FieldGroup
                 type="text"
-                value={this.state.username}
-                disabled={isLoading}
+                value={ this.state.username }
+                disabled={ isLoading }
                 placeholder="germany2018champs"
-                onChange={(e) => this._handleChange(e)}
+                onChange={ (e) => this._handleChange(e) }
                 name="username"
                 autoComplete="off"
                 label="Desired username"
-                validationState={validationState}
-                hasFeedback={true}
-                help={feedback}
+                validationState={ validationState }
+                hasFeedback={ true }
+                help={ feedback }
                 inputAddOn={
                   {
                     location: 'before',
@@ -183,7 +199,7 @@ class CreateUser extends Component {
               />
               <FieldGroup
                 type="text"
-                value={this.state.description}
+                value={ this.state.description }
                 placeholder="Germany for the 2018 World Cup winnnnnn!! 😞"
                 onChange={(e) => this._handleChange(e)}
                 name="description"
@@ -191,10 +207,10 @@ class CreateUser extends Component {
               />
               <Button
                 bsStyle="primary"
-                disabled={ isLoading || (!isValid && !this.state.error) }
-                onClick={ (isLoading || (!isValid && !this.state.error) || !this.state.usernameHasChanged) ? null : (e) => this._handleClick(e) }
+                disabled={ !isValid }
+                onClick={ !isValid ? null : (e) => this._handleClick(e) }
               >
-                {isLoading ? 'Loading...' : 'Create user'}
+                { isLoading ? 'Loading...' : 'Create user' }
               </Button>
             </form>
           </Col>
