@@ -16,9 +16,11 @@ describe("DTwitter contract", function() {
     const description = 'test description';
     const { createAccount, users } = DTwitter.methods;
 
-    await createAccount(username, description).send();
+    const result = await createAccount(username, description).send();
+    console.log('result returned from createAccount: ' + JSON.stringify(result));
 
     const user = await users(username);
+    console.log('user returned from contract: ' + JSON.stringify(user));
 
     assert.equal(user.username, username);
     assert.equal(user.description, description);

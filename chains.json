@@ -30,5 +30,45 @@
         "address": "0x9348Dc88cdbA6079257b2aDc018BD69F1e0695c1"
       }
     }
+  },
+  "0x830630f269ea6531e900f2b996ed903dd6cea4c9e927130cc60c12395491b196": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0xc099C2f7Db0C6f7bCb763A6364b1Ad27b37AD33e"
+      }
+    }
+  },
+  "0x3e39711f611041219118961ab5b3b4408e8d1fae87c0113418b8081a663008ea": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0xa16F8C8A013805cb8A48384c04156e5339D1Fd4B"
+      }
+    }
+  },
+  "0xcc99d9e39ae88bd64da7017c1f20ba533ae5a54f8b9fbb87d940ffa7895b9dd6": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x7a027b46be4C9863bA1A8AD210AC243F05E6dD03"
+      }
+    }
+  },
+  "0x32b7d1f73bc66277dfa55972beba7663ef876253d01fbfe65d9cf99b2005c8b2": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0xF2b7A7B48DBeBCD2e3640C45e48189e7cD243F33"
+      }
+    }
+  },
+  "0x6614de2fc88f6546f90df8d4c7080095caba74eab0652d125b8eac2846cef6fe": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x536D9B4E5Ac26BD0757dEfA1A05c57E90E87ec8f"
+      }
+    }
   }
 }
