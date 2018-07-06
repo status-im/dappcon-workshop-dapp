@@ -13,7 +13,7 @@ class UpdateUser extends Component {
     this.state = {
       isLoading: false,
       picture: '',
-      description: this.props.user.description,
+      description: '',
       error: '',
       formState: null,
       formUpdated: false
@@ -104,6 +104,12 @@ class UpdateUser extends Component {
   //#endergion
 
   //#region React lifecycle events
+  componentDidUpdate(prevProps){
+    if(this.props.user.description !== prevProps.user.description){
+      this.setState({description: this.props.user.description});
+    }
+  }
+
   render() {
     const { isLoading, error, formState, description, picture } = this.state;
     const { user } = this.props;
