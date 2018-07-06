@@ -32,7 +32,7 @@ contract DTwitter {
 
         users[usernameHash].creationDate = now;
         users[usernameHash].owner = msg.sender;
-        users[usernameHash].username = username; 
+        users[usernameHash].username = username;
         users[usernameHash].description = description;
 
         owners[msg.sender] = usernameHash;
@@ -62,12 +62,6 @@ contract DTwitter {
         uint tweetIndex = user.tweets.length++;
         user.tweets[tweetIndex] = content;
         emit NewTweet(usernameHash, content);
-    }
-
-    function getTweet(string username, uint index) public view returns(string retTweet) {
-        bytes32 usernameHash = keccak256(abi.encodePacked(username));
-        require(users[usernameHash].creationDate != 0);
-        return users[usernameHash].tweets[index];
     }
 
 }

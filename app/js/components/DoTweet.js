@@ -3,9 +3,15 @@ import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-b
 import React, { Component } from 'react';
 import FieldGroup from './FieldGroup';
 
-// The Header creates links that can be used to navigate
-// between routes.
+/**
+ * Class that renders a form to allow the user to create
+ * a tweet that is stored in the contract.
+ * 
+ * @extends React.Component
+ */
 class DoTweet extends Component{
+
+  //#region Constructor
   constructor(props, context) {
     super(props, context);
 
@@ -16,54 +22,88 @@ class DoTweet extends Component{
       isLoading: false,
       error: ''
     };
-  }
 
-  componentDidMount(){
-    
+    this.tweetInput = null;
   }
+  //#endregion
 
+  //#region Component events
   /**
-   * Events
+   * Handles the 'Tweet' button click event which
+   * sends a transaction to the contract to store a
+   * tweet for the current user.
+   * 
+   * @returns {null}
    */
-  handleClick = async (e) => {
-    if(this.getValidationState() === 'error'){
+  _handleClick = async (e) => {
+
+    // do not post tweet if there is a form error or user has not typed anything
+    if(this._getValidationState() === 'error' || !this.state.tweetHasChanged){
       return e.preventDefault();
     }
     
+    // show loading state
     this.setState({ isLoading: true });
 
-    // send tweet to the contract
-    const { tweet } = DTwitter.methods;
+    const { username, account, onAfterTweet } = this.props;
+    const tweet = DTwitter.methods.tweet(username, this.state.tweet);
+    
     try{
-      const gasEstimate = await tweet(this.props.username, this.state.tweet).estimateGas();
-
-      await tweet(this.props.username, this.state.tweet).send({gas: gasEstimate});
-
+      // estimate gas before sending tweet transaction
+      const gasEstimate = await tweet.estimateGas();
+      
+      // send the tweet transaction plus a little extra gas in case the contract state
+      // has changed since we've done our gas estimate
+      await tweet.send({ from: account, gas: gasEstimate + 1000 });
+      
+      // remove loading state
       this.setState({ isLoading: false });
 
-      this.props.onAfterTweet();
+      // tell parent we've updated a user and to re-fetch user details from the contract
+      onAfterTweet();
     }
     catch(err){
+      // remove loading state and show error message
       this.setState({ isLoading: false, error: err.message });
     }
   }
 
-  handleChange(e) {
+   /**
+   * When user changes an input value, record that in the state.
+   * 
+   * @param {SyntheticEvent} cross-browser wrapper around the browser’s native event
+   * 
+   * @return {null}
+   */
+  _handleChange(e) {
     let state = {tweetHasChanged: true};
     state[e.target.name] = e.target.value;
     this.setState(state);
   }
+  //#endregion
 
+  //#region Helper methods
   /**
-   * Helper methods
+   * Validates the form. Return null for no state change,
+   * 'success' if valid, and error' if invalid.
+   * 
+   * @return {string} null for no state change, 'success' 
+   * if valid, and error' if invalid
    */
-  getValidationState() {
+  _getValidationState() {
     return ((this.state.tweet === '' && !this.state.tweetHasChanged) || (this.state.tweet.length > 0 && this.state.tweet.length <= 140)) ? null : 'error';
+  }
+  //#endregion
+
+  //#region React lifecycle events
+  componentDidMount(){
+    // set focus to tweet textarea after render
+    if(this.tweetInput) this.tweetInput.focus();
   }
 
   render(){
 
-    const validationState = this.getValidationState();
+    const validationState = this._getValidationState();
     const isValid = validationState !== 'error';
     const { isLoading, error, tweet } = this.state;
 
@@ -76,16 +116,17 @@ class DoTweet extends Component{
           type="text"
           value={ tweet }
           placeholder="140 characters or less..."
-          onChange={ (e) => this.handleChange(e) }
+          onChange={ (e) => this._handleChange(e) }
           name="tweet"
           componentClass="textarea"
           hasFeedback={true}
           validationState={validationState}
+          inputRef={(input) => { this.tweetInput = input; }}
         />
         <Button
           bsStyle="primary"
           disabled={ !isValid && !error }            
-          onClick={ (!isValid && !error) ? null : (e) => this.handleClick(e) }
+          onClick={ (!isValid && !error) ? null : (e) => this._handleClick(e) }
         >{isLoading ? 'Loading...' : 'Post tweet'}</Button>
         <FormGroup
           controlId="formBasicText"
@@ -96,5 +137,6 @@ class DoTweet extends Component{
       </form>
     );
   }
+  //#endregion
 }
 export default DoTweet

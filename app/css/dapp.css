@@ -30,6 +30,9 @@ nav .profile-link .username{
   text-align: center;
   margin-bottom: 10px;
 }
+.tweets .tweet .list-group-item-text {
+  white-space: pre-line;
+}
 .logs {
   background-color: black;
   font-size: 14px;

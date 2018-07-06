@@ -6,12 +6,22 @@ import CreateUser from './CreateUser';
 import UpdateUser from './UpdateUser';
 import React, { Component } from 'react';
 
+/**
+ * Class representing the area below the header.
+ * The component rendering in this area is controlled by
+ * a @external "BrowserRouter"
+ * 
+ * @extends React.Component
+ */
 class Main extends Component {
 
+  //#region Constructor
   constructor(props){
     super(props);
   }
+  //#endregion
 
+  //#region React lifecycle events
   render () {
     return (
       <main>
@@ -24,6 +34,7 @@ class Main extends Component {
       </main>
     )
   }
+  //#endregion
 }
 
 export default Main

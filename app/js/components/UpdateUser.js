@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import FieldGroup from './FieldGroup';
 
 class UpdateUser extends Component {
+
+  //#region Constructor
   constructor(props, context) {
     super(props, context);
 
@@ -17,46 +19,80 @@ class UpdateUser extends Component {
       formUpdated: false
     };
   }
+  //#endregion
 
+  //#region Component events
   /**
-   * Events
+   * Handles the 'Update user' button click event which
+   * sends a transaction to the contract to update the 
+   * user's profile.
+   * 
+   * @returns {null}
    */
-  handleClick = async () => {
+  _handleClick = async () => {
+    // if the form has not been updated, do nothing
+    if (!this.state.formUpdated) return;
+    
+    // show loading state
     this.setState({ isLoading: true });
 
-    if (!this.state.formUpdated) return; // no form update => do nothing
-
+    // if the user has updated their photo, try to upload it to ipfs
+    // and use the resulting ipfs hash to send to the contract as part
+    // of the user's profile.
     let hash = '';
     if (this.state.picture !== '') {
       try {
+        // upload the file to ipfs and get the resulting hash
         hash = await EmbarkJS.Storage.uploadFile([this.inputPicture]);
       }
       catch (err) {
+        // stop loading state and show user the error
         return this.setState({ isLoading: false, formState: 'error', error: err.message });
       }
     }
 
-    const gasEstimate = await DTwitter.methods.editAccount(this.props.user.username, this.state.description, hash).estimateGas();
+    const { account, user } = this.props;
+    const { description } = this.state;
+    const editAccount = DTwitter.methods.editAccount(user.username, description, hash);
+
+    // get a gas estimate for the transaction with the input username
+    // and description
+    const gasEstimate = await editAccount.estimateGas();
 
     try {
-      const result = await DTwitter.methods.editAccount(this.props.user.username, this.state.description, hash).send({ gas: gasEstimate });
+      // send the transaction with our gas estimate (plus a little bit more in case the contract)
+      // state has changed since we got our estimate
+      const result = await editAccount.send({ from: account, gas: gasEstimate + 1000 });
+      
       if (result.status !== '0x1') {
         return this.setState({ isLoading: false, formState: 'error', error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
       }
 
+      // stop loading state, and render the form as successful
       this.setState({ isLoading: false, formState: 'success' });
 
-      // tell parent we've got an updated user
+      // tell parent we've updated our user, so the current
+      // user is re-fetched to get the user's details
       return this.props.onAfterUserUpdate();
     }
     catch (err) {
+      // stop loading state and show user the error
       this.setState({ isLoading: false, formState: 'error', error: err.message });
     }
 
     return null;
   }
 
-  handleChange(e) {
+  /**
+   * When user changes an input value, record that in the state.
+   * Additionally, sets state that the form has been updated to 
+   * allow for more fine validation control
+   * 
+   * @param {SyntheticEvent} cross-browser wrapper around the browser’s native event
+   * 
+   * @return {null}
+   */
+  _handleChange(e) {
     let state = { formUpdated: true };
     const input = e.target.name;
     const value = e.target.value;
@@ -65,10 +101,9 @@ class UpdateUser extends Component {
 
     this.setState(state);
   }
+  //#endergion
 
-  /**
-   * React methods
-   */
+  //#region React lifecycle events
   render() {
     const { isLoading, error, formState, description, picture } = this.state;
     const { user } = this.props;
@@ -82,48 +117,48 @@ class UpdateUser extends Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <form>
+            <form onSubmit={ isLoading ? null : (e) => this._handleClick(e) }>
               <FieldGroup
                 type="text"
-                value={user.username}
+                value={ user.username }
                 disabled={true}
                 name="username"
                 label="Username"
               />
               <FieldGroup
                 type="text"
-                value={description}
+                value={ description }
                 placeholder="description"
-                onChange={(e) => this.handleChange(e)}
+                onChange={ (e) => this._handleChange(e) }
                 name="description"
                 label="Description"
-                validationState={formState}
+                validationState={ formState }
               />
               <FieldGroup
                 type="file"
-                value={picture}
-                onChange={(e) => this.handleChange(e)}
+                value={ picture }
+                onChange={ (e) => this._handleChange(e) }
                 name="picture"
                 label="Profile picture"
-                inputRef={(input) => this.inputPicture = input}
-                validationState={formState}
+                inputRef={ (input) => this.inputPicture = input }
+                validationState={ formState }
               />
               <FormGroup>
-                {user.picture.length ? <Image src={user.picture} width="100" circle /> : ''}
+                { user.picture.length ? <Image src={ user.picture } width="100" circle /> : '' }
               </FormGroup>
               <FormGroup>
                 <Button
                   bsStyle="primary"
-                  disabled={isLoading}
-                  onClick={isLoading ? null : (e) => this.handleClick(e)}
+                  disabled={ isLoading }
+                  onClick={ isLoading ? null : (e) => this._handleClick(e) }
                 >
-                  {isLoading ? 'Loading...' : 'Update profile'}
+                  { isLoading ? 'Loading...' : 'Update profile' }
                 </Button>
               </FormGroup>
               <FormGroup
-                validationState={formState}
+                validationState={ formState }
               >
-                <HelpBlock>{feedback}</HelpBlock>
+                <HelpBlock>{ feedback }</HelpBlock>
               </FormGroup>
             </form>
           </Col>
@@ -131,6 +166,7 @@ class UpdateUser extends Component {
       </Grid>
     );
   }
+  //#endregion
 }
 
 export default withRouter(UpdateUser);

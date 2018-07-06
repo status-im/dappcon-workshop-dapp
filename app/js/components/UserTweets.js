@@ -8,6 +8,7 @@ import imgAvatar from '../../img/avatar-default.png';
 // number, then a "player not found" message is displayed.
 class UserTweets extends Component {
   
+  //#region Constructor
   constructor(props, context){
     super(props, context);
     this.state = {
@@ -16,25 +17,26 @@ class UserTweets extends Component {
     };
     this.event = null;
   }
+  //#endregion
 
-  componentDidMount(){
-    EmbarkJS.onReady((err) => {
-      this._getUserDetails();
+  //#region Helper methods
+  /**
+   * Get the user details and subscribe to their tweet event
+   */
+  _init(){
+    const { username } = this.props.match.params;
+    this._getUserDetails(username);
 
-      // subscribe to tweet events
-      this._subscribeToNewTweetEvent();
-    });
+    // subscribe to tweet events
+    this._subscribeToNewTweetEvent(username);
   }
 
-  componentWillUnmount(){
-    if(!this.event) return;
-    // TODO: check if this is the 'right' way to remove / stop the event listener
-    this.event.removeListener(this.event);
-  }
-
-  _getUserDetails = async() => {
+  /**
+   * Fetches the user's details from the contract for display
+   */
+  _getUserDetails = async(username) => {
       // get user details and update state
-      let user = await DTwitter.methods.users(web3.utils.keccak256(this.props.match.params.username)).call();
+      let user = await DTwitter.methods.users(web3.utils.keccak256(username)).call();
 
       // update picture url for ipfs
       user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
@@ -42,24 +44,24 @@ class UserTweets extends Component {
       this.setState({user: user});
   }
 
-  _subscribeToNewTweetEvent(){
-    const username = this.props.match.params.username;
-
-
-    this.event = DTwitter.events.NewTweet({_from: web3.utils.keccak256(username), fromBlock: 0})
+  /**
+   * Subscribes to a tweet event from the contract.
+   * When a tweet is received, it is appended to the list of
+   * tweets.
+   * 
+   * @param {String} username 
+   * @returns {null}
+   */
+  _subscribeToNewTweetEvent(username){
+    this.event = DTwitter.events.NewTweet({
+        filter: {_from: web3.utils.keccak256(username)}, 
+        fromBlock: 0
+      })
       .on('data', (event) => {
         console.log('new tweet event fired: ' + JSON.stringify(event));
-        // let index = parseInt(event.returnValues.index);
-        // console.log('calling getTweet with index ' + index);
-        // DTwitter.methods.getTweet(username, index).call().then((tweet) => {
-        //   console.log('get tweet at index ' + index + ': ' + JSON.stringify(tweet));
-          let tweets = this.state.tweets;
-          tweets.push(event.returnValues.tweet);
-          this.setState({tweets: tweets});
-        //   return null;
-        // }).catch(function(error){
-        //   console.error('error getting tweet at index ' + index, error);
-        // });
+        let tweets = this.state.tweets;
+        tweets.push(event.returnValues.tweet);
+        this.setState({tweets: tweets});
       })
       .on('changed', function (event){
         console.warn('event removed: ' + JSON.stringify(event));
@@ -67,6 +69,38 @@ class UserTweets extends Component {
       .on('error', function(error){
         console.error('error occurred with tweet event: ', error);
       });
+  }
+  //#endregion
+
+  //#region React lifecycle events
+  /**
+   * Get the user details and subscribe to their tweet event
+   */
+  componentDidMount(){
+    EmbarkJS.onReady((err) => {
+      this._init();
+    });
+  }
+
+  /**
+   * If the username was changed (ie redirected from a new route),
+   * we need to get the new user's details and subscribe to their tweet
+   * event.
+   */
+  componentDidUpdate(prevProps){
+    if(this.props.match.params.username !== prevProps.match.params.username){
+      this._init();
+    }
+  }
+
+  /**
+   * Unsubscribe from our tweet event so we stop
+   * receiving tweets.
+   */
+  componentWillUnmount(){
+    if(!this.event) return;
+    // TODO: check if this is the 'right' way to remove / stop the event listener
+    this.event.removeListener(this.event);
   }
 
   render(){
@@ -80,7 +114,7 @@ class UserTweets extends Component {
       <Grid>
         <Row>
           <Col xs={12}>
-            <PageHeader>{this.props.match.params.username} <small>doesn't exist!</small></PageHeader>
+            <PageHeader>{ this.props.match.params.username } <small>doesn't exist!</small></PageHeader>
           </Col>
         </Row>
       </Grid>);  
@@ -88,21 +122,21 @@ class UserTweets extends Component {
       // Render real UI ...
       const {username, description, picture} = user;
       const tweetList = this.state.tweets.map(function(tweet, index){
-                          return <ListGroupItem key={index} header={username}>{tweet}</ListGroupItem>
+                          return <ListGroupItem className='tweet' key={ index } header={ username }>{ tweet }</ListGroupItem>
                         });
       return (
         <Grid>
           <Row>
             <Col xs={4}>
               <Thumbnail src={picture} alt={username}>
-                <h3>{username}</h3>
-                <p>{description}</p>
+                <h3>{ username }</h3>
+                <p>{ description }</p>
               </Thumbnail>
               
             </Col>
             <Col xs={8}>
-              <ListGroup>
-                {tweetList}
+              <ListGroup className='tweets'>
+                { tweetList }
               </ListGroup>
             </Col>
           </Row>
@@ -110,6 +144,6 @@ class UserTweets extends Component {
       )
     }
   }
-  
+  //#endregion
 }
 export default UserTweets

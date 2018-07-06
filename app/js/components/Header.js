@@ -5,9 +5,16 @@ import DoTweet from './DoTweet';
 import Search from './Search';
 import { limitLength } from '../utils';
 
-// The Header creates links that can be used to navigate
-// between routes.
+/**
+ * Class representing the header of the page that handles
+ * commone functions such as navigation, searching of users,
+ * link to create account, and modal to tweet
+ * 
+ * @extends React.Component
+ */
 class Header extends Component {
+
+  //#region Constructor
   constructor(props, context) {
     super(props, context);
 
@@ -16,23 +23,32 @@ class Header extends Component {
       showTooltip: false
     };
   }
+  //#endregion
 
-  handleClose() {
+  //#region Component events
+  /**
+   * Hides the tweet modal
+   */
+  _handleClose() {
     this.setState({ showModal: false });
   }
 
-  handleShow() {
+  /**
+   * Shows the tweet modal
+   */
+  _handleShow() {
     this.setState({ showModal: true });
   }
 
-  getTarget() {
-    return ReactDOM.findDOMNode(this.target);
-  }
-
-  handleToggle() {
+  /**
+   * Toggles the current account address tooltip
+   */
+  _handleToggle() {
     this.setState({ showTooltip: !this.state.showTooltip });
   }
+  //#endregion
 
+  //#region React lifecycle events
   render() {
     const { picture, username, description } = this.props.user;
     const isEditable = Boolean(username);
@@ -60,8 +76,8 @@ class Header extends Component {
               <React.Fragment>
                 <Navbar.Text pullRight>
                   <span
-                    onMouseEnter={(e) => this.handleToggle(e)}
-                    onMouseLeave={(e) => this.handleToggle(e)}
+                    onMouseEnter={(e) => this._handleToggle(e)}
+                    onMouseLeave={(e) => this._handleToggle(e)}
                     className='address'
                     ref={(span) => this.tooltipTarget = span}
                     >{limitLength(this.props.account, 7)}
@@ -85,19 +101,19 @@ class Header extends Component {
                   <span className='username'>{username}</span>
                 </NavLink>
 
-                <Button bsStyle="primary" onClick={(e) => this.handleShow(e)}>
+                <Button bsStyle="primary" onClick={(e) => this._handleShow(e)}>
                   Tweet
                 </Button>
 
-                <Modal show={ this.state.showModal } onHide={(e) => this.handleClose(e)}>
+                <Modal show={ this.state.showModal } onHide={(e) => this._handleClose(e)}>
                   <Modal.Header closeButton>
                     <Modal.Title>New tweet</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <DoTweet username={username} onAfterTweet={(e) => this.handleClose()}></DoTweet>
+                    <DoTweet username={username} onAfterTweet={(e) => this._handleClose()}></DoTweet>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button onClick={(e) => this.handleClose(e)}>Close</Button>
+                    <Button onClick={(e) => this._handleClose(e)}>Close</Button>
                   </Modal.Footer>
                 </Modal>
               </React.Fragment>
@@ -107,5 +123,6 @@ class Header extends Component {
       </Navbar>
     );
   }
+  //#endregion
 }
 export default Header
