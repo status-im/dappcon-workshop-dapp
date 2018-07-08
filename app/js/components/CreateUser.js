@@ -97,7 +97,7 @@ class CreateUser extends Component {
         if (!this.state.isLoading) {
 
           // call the userExists method in our contract asynchronously
-          DTwitter.methods.userExists(value).call().then((exists) => {
+          DTwitter.methods.userExists(web3.utils.keccak256(value)).call().then((exists) => {
             
             // stop loading state
             state.isLoading = false;

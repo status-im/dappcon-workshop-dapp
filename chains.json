@@ -3,15 +3,39 @@
     "contracts": {
       "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
         "name": "DTwitter",
-        "address": "0x730533f65285Fe73f9B312C64C6b5A4Eb34A5A54"
+        "address": "0x004A95B5BF0F7Fea776205cD59f2486fadff526D"
       },
       "0x1797453304e4b69b44fb7d649a72ca80394a8b4e1d14c2cc530f5dc3ae1f0ea3": {
         "name": "ENSRegistry",
-        "address": "0xAcbFdb1d38C6EEA110a204B7877947AcaA550db8"
+        "address": "0xc07477504DB90579EA350Bececb1DDa772ffe748"
       },
       "0x2bbb044bd57c334bafb8140dfa76ffdb36e1991b9bf340565e1d5edc02f85893": {
         "name": "FIFSRegistrar",
         "address": "0xE7AfE25416C6869B148d0fF42FB8990Fb49a6F6f"
+      },
+      "0x284ca21976be7b83e49aff18a3034bb32850b4bfc6a55809b20bfbe72ac78362": {
+        "name": "FIFSRegistrar",
+        "address": "0x6a45998a9748211a1652387b4dDcE4fBDc2f9E3b"
+      },
+      "0xe2f18a6e39f5e2840324c49db7f7e609b320a0c417da77e941c21a360413fcf4": {
+        "name": "FIFSRegistrar",
+        "address": "0x0dDE0DAda8A9cc1dEF1Fa0EC0A8Dd54154d958bd"
+      },
+      "0xce84268300f3025cdad8ffb04c67bf163f2c538d7f685ee2c1eca3f184a3e221": {
+        "name": "FIFSRegistrar",
+        "address": "0x6C283709319d3ff12a37Db0c2B9e064408DF80c5"
+      },
+      "0x8e830368a1271b68c8a73f23ae048fd70327d1bcc691dff04c50ce4f807ab251": {
+        "name": "FIFSRegistrar",
+        "address": "0x31593F25781F91Bc08249733e6618597668da48D"
+      },
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0x3188e8830d3F3887A04BA9982BfC2Ec1a63903e8"
+      },
+      "0xd2d15192796bb302aaf2ce3e5297ca0f42949651c09beacb7bc1218116c949dc": {
+        "name": "FIFSRegistrar",
+        "address": "0x7ea3197c56BB0170476194411e64F7caB65dE306"
       }
     }
   },
@@ -84,6 +108,86 @@
       "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
         "name": "DTwitter",
         "address": "0xC7D8c27a32F21a179B79bA30148dEC68AC6C71D3"
+      }
+    }
+  },
+  "0xfcd36a664f8055d212b8814633a6896f10e002f5a7a05449f51c86dcbb659e54": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0xE75D2Ce89E4539E2462a8aBDb36929124f8030B0"
+      }
+    }
+  },
+  "0x50f6c6bdc0d0cda9c1f3f611ac31937c43e737eac5c2ab1b9f91a70394ea092d": {
+    "contracts": {
+      "0xa6ef66d311293de88b3939d16826bb1546111982172c2e9c803c0ac8153a1b52": {
+        "name": "DTwitter",
+        "address": "0x58285E0B0C07e8cf86DeDa34DdDbc3cE4Bd0ea64"
+      }
+    }
+  },
+  "0xd7172f5e5a469c5ea7f7a8b71c26d1ce1b4f16b0f62809f38e494d956d34a7c6": {
+    "contracts": {
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0x9f6C07CCEb84A93d0F1906f6a382288af2bb804f"
+      }
+    }
+  },
+  "0xdd081f6af1cf1035cdfa2c54b1bdccb1dc2c3172721b90ee93d1473c63dbe7e3": {
+    "contracts": {
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0x77b6c0E34B92d2EDa5726AaCF38193854F6187B0"
+      }
+    }
+  },
+  "0xca42ddc0b92e0409874f8f797452579a385d74755ef45e2b76927f02a341fe32": {
+    "contracts": {
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0x8fE9Ec3246DA59dCE44Cd5084BB26D68001F6DC3"
+      }
+    }
+  },
+  "0xd0e2f4f8d6d651eba1f7eeb53291f90192476415c6735beb22813c25ef7332f8": {
+    "contracts": {
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0xA2507144a957696e430A67A19b6B37D77689b3f5"
+      }
+    }
+  },
+  "0xb582edf9ed12b8fa5eac13e924b3244cc0cc37645d4877cbfd040537a4d03740": {
+    "contracts": {
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0x49d532D683dEB8B512096E35E2CCc620ebed556A"
+      }
+    }
+  },
+  "0x82782e1aa3c111be0528cb727ca3101b33a7edb0ec2028b6ec61625b5780a72f": {
+    "contracts": {
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0xDb6D07014D28Da3cFc4d8eaf0CE78278DFa40115"
+      }
+    }
+  },
+  "0xd40221d36aa5d4b63f0d4c10acf2c06a89fa9c42bf7c3eef1c8b4659a38d698f": {
+    "contracts": {
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0xeD728C0b1e59CA32286e694bC6F79ef39D9DBbf2"
+      }
+    }
+  },
+  "0xebacecb8093cd0b94128dbb259d70021b0583becf2b9536c139d50433606fa19": {
+    "contracts": {
+      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
+        "name": "DTwitter",
+        "address": "0xcFAC402592F3D6eD8Ca107fE374D1D364bD291Cf"
       }
     }
   }

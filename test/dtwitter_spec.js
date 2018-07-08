@@ -13,13 +13,13 @@ config({
 
 const username = 'testusername';
 const description = 'test description';
-const { createAccount, users, owners, userExists } = DTwitter.methods;
+const { createAccount, users, owners, userExists, editAccount, tweet } = DTwitter.methods;
 
 let usernameHash;
 
 describe("DTwitter contract", function() {
 
-  it("should create an owner for current account", async function() {
+  it("should create a dtwitter account using the current address", async function() {
 
     // do the create account
     const result = await createAccount(username, description).send();
@@ -32,7 +32,7 @@ describe("DTwitter contract", function() {
 
   });
   
-  it("should create a user 'testusername'", async function() {
+  it("should have created a user 'testusername'", async function() {
 
     // get user details from contract
     const user = await users(usernameHash).call();
@@ -43,9 +43,22 @@ describe("DTwitter contract", function() {
   });
 
   it("should know 'testusername' exists", async function() {
-    const exists = await userExists('testusername').call();
+    const exists = await userExists(usernameHash).call();
 
     assert.equal(exists, true);
+  });
+  
+  
+  it("should be able to edit account", async function() {
+    const updatedDescription = description + ' edited';
+    const updatedImageHash = 'QmWvPtv2xVGgdV12cezG7iCQ4hQ52e4ptmFFnBK3gTjnec';
+      
+    await editAccount(usernameHash, updatedDescription, updatedImageHash).send();
+    
+    const updatedUserDetails = await users(usernameHash).call();
+    
+    assert.equal(updatedUserDetails.description, updatedDescription);
+    assert.equal(updatedUserDetails.picture, updatedImageHash);
   });
 
 });

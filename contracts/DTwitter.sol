@@ -38,13 +38,11 @@ contract DTwitter {
         owners[msg.sender] = usernameHash;
     }
 
-    function userExists(string username) public view returns (bool) {
-        bytes32 usernameHash = keccak256(abi.encodePacked(username));
+    function userExists(bytes32 usernameHash) public view returns (bool) {
         return users[usernameHash].creationDate != 0;
     }
 
-    function editAccount(string username, string description, string pictureHash) public {
-        bytes32 usernameHash = keccak256(abi.encodePacked(username));
+    function editAccount(bytes32 usernameHash, string description, string pictureHash) public {
 
         require(users[usernameHash].owner == msg.sender);
 
@@ -54,8 +52,7 @@ contract DTwitter {
         }
     }
 
-    function tweet(string username, string content) public {
-        bytes32 usernameHash = keccak256(abi.encodePacked(username));
+    function tweet(bytes32 usernameHash, string content) public {
         require(users[usernameHash].owner == msg.sender);
 
         User storage user = users[usernameHash];

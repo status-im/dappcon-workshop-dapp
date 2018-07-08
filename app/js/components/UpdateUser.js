@@ -53,7 +53,7 @@ class UpdateUser extends Component {
 
     const { account, user } = this.props;
     const { description } = this.state;
-    const editAccount = DTwitter.methods.editAccount(user.username, description, hash);
+    const editAccount = DTwitter.methods.editAccount(web3.utils.keccak256(user.username), description, hash);
 
     // get a gas estimate for the transaction with the input username
     // and description

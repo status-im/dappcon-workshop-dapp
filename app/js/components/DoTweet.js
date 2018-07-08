@@ -46,7 +46,7 @@ class DoTweet extends Component{
     this.setState({ isLoading: true });
 
     const { username, account, onAfterTweet } = this.props;
-    const tweet = DTwitter.methods.tweet(username, this.state.tweet);
+    const tweet = DTwitter.methods.tweet(web3.utils.keccak256(username), this.state.tweet);
     
     try{
       // estimate gas before sending tweet transaction
