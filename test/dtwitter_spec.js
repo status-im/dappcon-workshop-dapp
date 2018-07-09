@@ -13,6 +13,7 @@ config({
 
 const username = 'testusername';
 const description = 'test description';
+const tweetContent = 'test tweet';
 const { createAccount, users, owners, userExists, editAccount, tweet } = DTwitter.methods;
 
 let usernameHash;
@@ -59,6 +60,18 @@ describe("DTwitter contract", function() {
     
     assert.equal(updatedUserDetails.description, updatedDescription);
     assert.equal(updatedUserDetails.picture, updatedImageHash);
+  });
+
+  it("should be able to add a tweet and receive it via contract event", async function() {
+    DTwitter.events.NewTweet({
+      filter: {_from: usernameHash}, 
+      fromBlock: 0
+    })
+    .on('data', (event) => {
+      assert.equal(event.returnValues.tweet, tweetContent);
+    });  
+
+    await tweet(usernameHash, tweetContent).send();
   });
 
 });

@@ -13,7 +13,7 @@ class UpdateUser extends Component {
     this.state = {
       isLoading: false,
       picture: '',
-      description: '',
+      description: this.props.user.description,
       error: '',
       formState: null,
       formUpdated: false
