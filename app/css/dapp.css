@@ -30,6 +30,11 @@ nav .profile-link .username{
   text-align: center;
   margin-bottom: 10px;
 }
+nav .sk-spinner.pacman{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10px 0 10px 30px;
+}
 .tweets .tweet .list-group-item-text {
   white-space: pre-line;
 }

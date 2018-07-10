@@ -3,7 +3,8 @@ import { Button, Image, Modal, Navbar, Nav, NavItem, FormGroup, FormControl, Ove
 import React, { Component } from 'react';
 import DoTweet from './DoTweet';
 import Search from './Search';
-import { limitLength } from '../utils';
+import { limitAddressLength } from '../utils';
+import Spinner from 'react-spinkit';
 
 /**
  * Class representing the header of the page that handles
@@ -52,11 +53,68 @@ class Header extends Component {
   render() {
     const { picture, username, description } = this.props.user;
     const isEditable = Boolean(username);
+    const isLoading = !Boolean(this.props.account);
     const tooltipProps = {
       container: this,
       target: this.tooltipTarget,
       show: this.state.showTooltip
     };
+    let states = {};
+
+    // state when we are waiting for the App component to finish loading
+    // the current account (address) from web3.eth.getAccounts()
+    states.isLoading = <Spinner name="pacman" color="white" fadeIn='none'/>;
+
+    // state when our account has loaded, and it was determined that that
+    // account (address) has not been mapped to an owner/user in the contract
+    // (This happens in the App component)
+    states.isNotEditable = <React.Fragment>
+      <Navbar.Text pullRight>
+        <span
+          onMouseEnter={(e) => this._handleToggle(e)}
+          onMouseLeave={(e) => this._handleToggle(e)}
+          className='address'
+          ref={(span) => this.tooltipTarget = span}
+        >{limitAddressLength(this.props.account, 4)}
+        </span> doesn't have a user.&nbsp;
+          <NavLink exact to='/create'>Create one</NavLink>
+      </Navbar.Text>
+      <Overlay {...tooltipProps} placement="bottom">
+        <Tooltip id="overload-bottom">{this.props.account}</Tooltip>
+      </Overlay>
+    </React.Fragment>;
+
+    // state when our account has loaded, and it was determined that the
+    // account (address) has been mapped to an owner/user in the contract
+    // (This happens in the App component)
+    states.isEditable = <React.Fragment>
+      <NavLink exact to={'/update/@' + username} className='profile-link'>
+        <Image
+          src={picture}
+          alt={username}
+          width={60}
+          circle
+          className='profile'
+        ></Image>
+        <span className='username'>{username}</span>
+      </NavLink>
+
+      <Button bsStyle="primary" onClick={(e) => this._handleShow(e)}>
+        Tweet
+        </Button>
+
+      <Modal show={this.state.showModal} onHide={(e) => this._handleClose(e)}>
+        <Modal.Header closeButton>
+          <Modal.Title>New tweet</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <DoTweet username={username} onAfterTweet={(e) => this._handleClose()}></DoTweet>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={(e) => this._handleClose(e)}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    </React.Fragment>;
 
     return (
       <Navbar collapseOnSelect className={this.props.user.username ? '' : 'logged-out'}>
@@ -72,51 +130,13 @@ class Header extends Component {
               <Search />
             </Navbar.Form>
 
-            {!isEditable ?
-              <React.Fragment>
-                <Navbar.Text pullRight>
-                  <span
-                    onMouseEnter={(e) => this._handleToggle(e)}
-                    onMouseLeave={(e) => this._handleToggle(e)}
-                    className='address'
-                    ref={(span) => this.tooltipTarget = span}
-                    >{limitLength(this.props.account, 7)}
-                  </span> doesn't have a user.&nbsp;
-                  <NavLink exact to='/create'>Create one</NavLink>
-                </Navbar.Text>
-                <Overlay {...tooltipProps} placement="bottom">
-                  <Tooltip id="overload-bottom">{this.props.account}</Tooltip>
-                </Overlay>
-              </React.Fragment>
+            { isLoading ?
+              states.isLoading
               :
-              <React.Fragment>
-                <NavLink exact to={'/update/@' + username} className='profile-link'>
-                  <Image
-                    src={picture}
-                    alt={username}
-                    width={60}
-                    circle
-                    className='profile'
-                  ></Image>
-                  <span className='username'>{username}</span>
-                </NavLink>
-
-                <Button bsStyle="primary" onClick={(e) => this._handleShow(e)}>
-                  Tweet
-                </Button>
-
-                <Modal show={ this.state.showModal } onHide={(e) => this._handleClose(e)}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>New tweet</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <DoTweet username={username} onAfterTweet={(e) => this._handleClose()}></DoTweet>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button onClick={(e) => this._handleClose(e)}>Close</Button>
-                  </Modal.Footer>
-                </Modal>
-              </React.Fragment>
+              isEditable ?
+                states.isEditable
+                :
+                states.isNotEditable
             }
           </div>
         </Navbar.Collapse>
