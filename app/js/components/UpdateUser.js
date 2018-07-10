@@ -62,14 +62,14 @@ class UpdateUser extends Component {
     try {
       // send the transaction with our gas estimate (plus a little bit more in case the contract)
       // state has changed since we got our estimate
-      const result = await editAccount.send({ from: account, gas: gasEstimate + 1000 });
+      const result = await editAccount.send({ gas: gasEstimate + 1000 });
       
-      if (result.status !== '0x1') {
-        return this.setState({ isLoading: false, formState: 'error', error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+      if (result.status && !Boolean(result.status.toString().replace('0x', ''))) {
+        return this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
       }
 
       // stop loading state, and render the form as successful
-      this.setState({ isLoading: false, formState: 'success' });
+      this.setState({ isLoading: false, formState: 'success', formUpdated: false });
 
       // tell parent we've updated our user, so the current
       // user is re-fetched to get the user's details
@@ -77,7 +77,7 @@ class UpdateUser extends Component {
     }
     catch (err) {
       // stop loading state and show user the error
-      this.setState({ isLoading: false, formState: 'error', error: err.message });
+      this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: err.message });
     }
 
     return null;
@@ -111,7 +111,7 @@ class UpdateUser extends Component {
   }
 
   render() {
-    const { isLoading, error, formState, description, picture } = this.state;
+    const { isLoading, error, formState, formUpdated, description, picture } = this.state;
     const { user } = this.props;
     const feedback = formState === 'success' ? 'Saved' : error;
     return (
@@ -123,7 +123,7 @@ class UpdateUser extends Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <form onSubmit={ isLoading ? null : (e) => this._handleClick(e) }>
+            <form onSubmit={ isLoading || !formUpdated ? null : (e) => this._handleClick(e) }>
               <FieldGroup
                 type="text"
                 value={ user.username }
@@ -155,8 +155,8 @@ class UpdateUser extends Component {
               <FormGroup>
                 <Button
                   bsStyle="primary"
-                  disabled={ isLoading }
-                  onClick={ isLoading ? null : (e) => this._handleClick(e) }
+                  disabled={ isLoading || !formUpdated }
+                  onClick={ isLoading || !formUpdated ? null : (e) => this._handleClick(e) }
                 >
                   { isLoading ? 'Loading...' : 'Update profile' }
                 </Button>
