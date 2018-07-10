@@ -48,7 +48,7 @@ class CreateUser extends Component {
 
       // send the transaction to create an account with our gas estimate
       // (plus a little bit more in case the contract state has changed).
-      const result = await createAccount.send({ from: this.props.account, gas: gasEstimate + 1000 });
+      const result = await createAccount.send({ gas: gasEstimate + 1000 });
 
       // check result status. if status is false or '0x0', show user the tx details to debug error
       if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true

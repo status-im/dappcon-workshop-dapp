@@ -54,7 +54,7 @@ class DoTweet extends Component{
       
       // send the tweet transaction plus a little extra gas in case the contract state
       // has changed since we've done our gas estimate
-      await tweet.send({ from: account, gas: gasEstimate + 1000 });
+      await tweet.send({ gas: gasEstimate + 1000 });
       
       // remove loading state
       this.setState({ isLoading: false });

@@ -1,17 +1,25 @@
 {
-  "0xdde6a9192954f4d6501ce98ad7bce3b8b83b1d69192248d408697e9aa49d9ecf": {
+  "0x4788220cd8213be02253e757532d0a33ca4ca33e194e9fb5ead0797712e451db": {
     "contracts": {
       "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
         "name": "DTwitter",
-        "address": "0x748B1e003370a5EdAf965a89BeBf0Bf19472f170"
+        "address": "0x02778106a1E4FbAe35456b80a259Ac4F9d6EcD44"
       },
       "0x1797453304e4b69b44fb7d649a72ca80394a8b4e1d14c2cc530f5dc3ae1f0ea3": {
         "name": "ENSRegistry",
-        "address": "0x698dA658e9363A619C738146e3a2267b2487C008"
+        "address": "0x8C4E61644201d6b953e6a77279da0063C77C0C17"
       },
-      "0x0d8e129365403cec9d931fb5043084577c03d24d23a11aa5dae6ef1473e3d5d5": {
+      "0x4f2ec8bd9f20c23734df1765a6234f490d6f6d20c8a2579240c5c21fc1e3fd13": {
         "name": "FIFSRegistrar",
-        "address": "0x340B33717a1F84A1d997598Ba16Ed68A10b14e16"
+        "address": "0xB90e14eE00CC417974452f6276915cB3f4eeA4c1"
+      },
+      "0x9d71e0b1b6484d3ddf809d358f71ae0535166e8290c103f08d4f96f06570c6f3": {
+        "name": "FIFSRegistrar",
+        "address": "0x1fD75c07f3Ec72a99D682eCD380c6Ec03E8D19b0"
+      },
+      "0x972f980bf47614636adba4a6f14f7cacefc4713736d728a0e8582569335cea59": {
+        "name": "FIFSRegistrar",
+        "address": "0xF1182Fd6cE18D8665dCe54E1fcd820A6827E2215"
       }
     }
   }

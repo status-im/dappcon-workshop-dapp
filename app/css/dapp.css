@@ -35,54 +35,15 @@ nav .sk-spinner.pacman{
   vertical-align: middle;
   margin: 10px 0 10px 30px;
 }
+nav .navbar-text a {
+  text-decoration:underline;
+}
+nav .navbar-text a:hover, nav .navbar-text a:focus {
+  text-decoration:none;
+}
 .tweets .tweet .list-group-item-text {
   white-space: pre-line;
 }
-.logs {
-  background-color: black;
-  font-size: 14px;
-  color: white;
-  font-weight: bold;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.tab-content {
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
-  margin: 0px;
-}
-
-.nav-tabs {
-  margin-bottom: 0;
-}
-
-.status-offline {
-  vertical-align: middle;
-  margin-left: 5px;
-  margin-top: 4px;
-  width: 12px;
-  height: 12px;
-  background: red;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-}
-
-.status-online {
-  vertical-align: middle;
-  margin-left: 5px;
-  margin-top: 4px;
-  width: 12px;
-  height: 12px;
-  background: mediumseagreen;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-}
-
-input.form-control {
-  margin-right: 5px;
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  background-color: rgba(221, 221, 221, 0.4);
 }
