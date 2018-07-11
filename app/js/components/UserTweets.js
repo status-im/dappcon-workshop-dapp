@@ -58,9 +58,12 @@ class UserTweets extends Component {
     this.event = DTwitter.events.NewTweet({
         filter: {_from: web3.utils.keccak256(username)}, 
         fromBlock: 0
+      }, (err, event) => {
+        if (err){
+          this.props.onError(err);
+        }
       })
       .on('data', (event) => {
-        console.log('new tweet event fired: ' + JSON.stringify(event));
         let tweets = this.state.tweets;
         tweets.push({
           content: event.returnValues.tweet,
@@ -69,11 +72,8 @@ class UserTweets extends Component {
         });
         this.setState({tweets: tweets});
       })
-      .on('changed', function (event){
-        console.warn('event removed: ' + JSON.stringify(event));
-      })
       .on('error', function(error){
-        console.error('error occurred with tweet event: ', error);
+        this.props.onError(err);
       });
   }
 

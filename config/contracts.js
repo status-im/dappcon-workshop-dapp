@@ -55,7 +55,7 @@ module.exports = {
         }
       },
       gasLimit: 9000000,
-      gasPrice: 89200,
+      gasPrice: 91200,
       host: "rinkeby.infura.io/nmY8WtT4QfEwz2S7wTbl",
       port: false,
       protocol: 'https',

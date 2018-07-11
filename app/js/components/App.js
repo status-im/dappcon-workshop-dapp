@@ -55,9 +55,18 @@ class App extends Component {
       return this.setState({ user: user, account: accounts[0] });
     }
     catch (err) {
-      this.setState({ error: err });
-      this.props.history.push('/whoopsie');
+      this._onError(err);
     }
+  }
+
+  /**
+   * Sets the App state error and redirects the user to the error page
+   * 
+   * @param {Error} err - error encountered
+   */
+  _onError(err) {
+    this.setState({ error: err });
+    this.props.history.push('/whoopsie');
   }
   //#endregion
 
@@ -79,7 +88,8 @@ class App extends Component {
           user={this.state.user}
           account={this.state.account}
           error={this.state.error}
-          onAfterUserUpdate={(e) => this._loadCurrentUser()} />
+          onAfterUserUpdate={(e) => this._loadCurrentUser()}
+          onError={(err) => this._onError(err)} />
       </div>
     );
   }
