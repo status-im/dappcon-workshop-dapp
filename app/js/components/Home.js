@@ -19,7 +19,7 @@ class Home extends Component{
     return (
       <Grid>
         <Row>
-          <Col xs={10}>
+          <Col xs={12}>
             <PageHeader>
               Decentralised Twitter <small>Built using Embark by Status</small>
             </PageHeader>

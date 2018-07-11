@@ -4,6 +4,7 @@ import Home from './Home';
 import UserTweets from './UserTweets';
 import CreateUser from './CreateUser';
 import UpdateUser from './UpdateUser';
+import Error from './Error';
 import React, { Component } from 'react';
 
 /**
@@ -30,6 +31,7 @@ class Main extends Component {
           <PropsRoute path='/@:username' component={UserTweets} {...this.props}/>
           <PropsRoute path='/create' component={CreateUser} {...this.props}/>
           <PropsRoute path='/update/@:username' component={UpdateUser} {...this.props}/>
+          <PropsRoute path='/whoopsie' component={Error} {...this.props}/>
         </Switch>
       </main>
     )

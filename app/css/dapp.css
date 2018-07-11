@@ -41,6 +41,7 @@ nav .navbar-text a {
 nav .navbar-text a:hover, nav .navbar-text a:focus {
   text-decoration:none;
 }
+nav .error {color:red}
 .tweets .tweet .list-group-item-text {
   white-space: pre-line;
 }

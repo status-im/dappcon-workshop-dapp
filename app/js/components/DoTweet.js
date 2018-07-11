@@ -105,7 +105,7 @@ class DoTweet extends Component{
 
     const validationState = this._getValidationState();
     const isValid = validationState !== 'error';
-    const { isLoading, error, tweet } = this.state;
+    const { isLoading, error, tweet, tweetHasChanged } = this.state;
 
     let feedback = !isValid ? 'Tweet must be 140 characters or less' : '';
     if(this.state.error) feedback = error;
@@ -125,8 +125,8 @@ class DoTweet extends Component{
         />
         <Button
           bsStyle="primary"
-          disabled={ !isValid && !error }            
-          onClick={ (!isValid && !error) ? null : (e) => this._handleClick(e) }
+          disabled={ !isValid || error || !tweetHasChanged }            
+          onClick={ (!isValid || error || !tweetHasChanged) ? null : (e) => this._handleClick(e) }
         >{isLoading ? 'Loading...' : 'Post tweet'}</Button>
         <FormGroup
           controlId="formBasicText"

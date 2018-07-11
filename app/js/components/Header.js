@@ -53,7 +53,8 @@ class Header extends Component {
   render() {
     const { picture, username, description } = this.props.user;
     const isEditable = Boolean(username);
-    const isLoading = !Boolean(this.props.account);
+    const isError = this.props.error && this.props.error.message;
+    const isLoading = !Boolean(this.props.account) && !isError;
     const tooltipProps = {
       container: this,
       target: this.tooltipTarget,
@@ -64,6 +65,8 @@ class Header extends Component {
     // state when we are waiting for the App component to finish loading
     // the current account (address) from web3.eth.getAccounts()
     states.isLoading = <Spinner name="pacman" color="white" fadeIn='none'/>;
+
+    states.isError = <span className='error'>ERROR!</span>;
 
     // state when our account has loaded, and it was determined that that
     // account (address) has not been mapped to an owner/user in the contract
@@ -133,10 +136,13 @@ class Header extends Component {
             { isLoading ?
               states.isLoading
               :
-              isEditable ?
-                states.isEditable
+              isError ? 
+                states.isError
                 :
-                states.isNotEditable
+                isEditable ?
+                  states.isEditable
+                  :
+                  states.isNotEditable
             }
           </div>
         </Navbar.Collapse>

@@ -1,6 +1,7 @@
 import Header from './Header'
 import Main from './Main'
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import imgAvatar from '../../img/avatar-default.png';
 
 /**
@@ -18,7 +19,9 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: {}
+      user: {},
+      account: '',
+      error: {}
     }
   }
   //#endregion
@@ -52,7 +55,8 @@ class App extends Component {
       }
     }
     catch (err) {
-      console.error('Error loading currenet user: ', err);
+      this.setState({ error: err });
+      this.props.history.push('/whoopsie');
     }
   }
   //#endregion
@@ -67,12 +71,19 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header user={ this.state.user } account={ this.state.account } />
-        <Main user={ this.state.user } account={ this.state.account } onAfterUserUpdate={ (e) => this._loadCurrentUser() } />
+        <Header 
+          user={ this.state.user } 
+          account={ this.state.account }
+          error={ this.state.error } />
+        <Main 
+          user={ this.state.user } 
+          account={ this.state.account } 
+          error={ this.state.error }
+          onAfterUserUpdate={ (e) => this._loadCurrentUser() } />
       </div>
     );
   }
   //#endregion
 }
 
-export default App
+export default withRouter(App)
