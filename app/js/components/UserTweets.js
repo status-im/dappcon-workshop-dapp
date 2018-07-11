@@ -40,6 +40,8 @@ class UserTweets extends Component {
 
       // update picture url for ipfs
       user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+      // TODO: update to Date.js
+      user.creationDate = this._formatDate(user.creationDate);
       
       this.setState({user: user});
   }
@@ -60,7 +62,11 @@ class UserTweets extends Component {
       .on('data', (event) => {
         console.log('new tweet event fired: ' + JSON.stringify(event));
         let tweets = this.state.tweets;
-        tweets.push(event.returnValues.tweet);
+        tweets.push({
+          content: event.returnValues.tweet,
+          // TODO: update to Date.js
+          time: this._formatDate(event.returnValues.time)
+        });
         this.setState({tweets: tweets});
       })
       .on('changed', function (event){
@@ -69,6 +75,19 @@ class UserTweets extends Component {
       .on('error', function(error){
         console.error('error occurred with tweet event: ', error);
       });
+  }
+
+  /**
+   * Formats an int date into a displayable date
+   * @param {Number} intDate - date in seconds
+   * @returns {String} prettyfied date
+   */
+  _formatDate(intDate){
+    const padZeros = 13 - intDate.length;
+    if(padZeros > 0){
+      intDate *= Math.pow(10, padZeros);
+    }
+    return new Date(intDate).toString();
   }
   //#endregion
 
@@ -120,17 +139,23 @@ class UserTweets extends Component {
       </Grid>);  
     }else {
       // Render real UI ...
-      const {username, description, picture} = user;
+      const {username, description, picture, creationDate} = user;
       const tweetList = this.state.tweets.map(function(tweet, index){
-                          return <ListGroupItem className='tweet' key={ index } header={ username }>{ tweet }</ListGroupItem>
+                          return <ListGroupItem className='tweet' key={ index } header={ tweet.time }>{ tweet.content }</ListGroupItem>
                         });
       return (
         <Grid>
+          <Row>
+            <Col xs={12}>
+              <PageHeader>{ username }'s <small>tweets</small></PageHeader>
+            </Col>
+          </Row>
           <Row>
             <Col xs={4}>
               <Thumbnail src={picture} alt={username}>
                 <h3>{ username }</h3>
                 <p>{ description }</p>
+                <p>Member since: { creationDate }</p>
               </Thumbnail>
               
             </Col>

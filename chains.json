@@ -1,25 +1,21 @@
 {
-  "0x4788220cd8213be02253e757532d0a33ca4ca33e194e9fb5ead0797712e451db": {
+  "0xea7387b7d68f3d7139104b418d61bf1b621eb5a91700575d8d8d32a90f447778": {
     "contracts": {
-      "0x7cdafd8b713a2a137aa482400094d5148196dd4ed9e0b885613558758ba63ee5": {
-        "name": "DTwitter",
-        "address": "0x02778106a1E4FbAe35456b80a259Ac4F9d6EcD44"
-      },
       "0x1797453304e4b69b44fb7d649a72ca80394a8b4e1d14c2cc530f5dc3ae1f0ea3": {
         "name": "ENSRegistry",
-        "address": "0x8C4E61644201d6b953e6a77279da0063C77C0C17"
+        "address": "0x17300823B7b192312E416edD69b8F5B113BA264D"
       },
-      "0x4f2ec8bd9f20c23734df1765a6234f490d6f6d20c8a2579240c5c21fc1e3fd13": {
-        "name": "FIFSRegistrar",
-        "address": "0xB90e14eE00CC417974452f6276915cB3f4eeA4c1"
+      "0x35cbd109f501602ed728b03e78faa3df2cc6b5c9db220e139623f9ae41389b02": {
+        "name": "DTwitter",
+        "address": "0x97E2476A642AA74cB18ef0BeB902f2969c0C0eAB"
       },
-      "0x9d71e0b1b6484d3ddf809d358f71ae0535166e8290c103f08d4f96f06570c6f3": {
+      "0x83f5b0eb404694dabb27802f1f3236b24d5d0a6a2edabbd3fc6d781afaf8d21f": {
         "name": "FIFSRegistrar",
-        "address": "0x1fD75c07f3Ec72a99D682eCD380c6Ec03E8D19b0"
+        "address": "0xf4f059C77fD4f584d281b378e2EbeC6Ffd67eD47"
       },
-      "0x972f980bf47614636adba4a6f14f7cacefc4713736d728a0e8582569335cea59": {
+      "0xc7d20a141b180516beb929e52a4f842e7238f18a4cf9010aa383bfea2d954f28": {
         "name": "FIFSRegistrar",
-        "address": "0xF1182Fd6cE18D8665dCe54E1fcd820A6827E2215"
+        "address": "0x7E4778a2fB20424487Dfd6027A0B41eF5C4fa8cE"
       }
     }
   }

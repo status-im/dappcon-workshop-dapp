@@ -153,6 +153,9 @@ class CreateUser extends Component {
     } 
     if (length <= 5) return 'error';
 
+    // don't allow '@' or spaces
+    if(new RegExp(/[@\s]/gi).test(this.state.username)) return 'error';
+
     // if we have an error, returning 'error' shows the user 
     // the form is in error (red). Conversely, returning 'success'
     // shows the user the form is valid (green).
@@ -165,7 +168,7 @@ class CreateUser extends Component {
     const { isLoading } = this.state;
     let validationState = this._getValidationState();
     let isValid = validationState === 'success' && !isLoading && !this.state.error;
-    let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters.';
+    let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters and cannot include <pre>@</pre> or spaces.';
 
     if (!this.state.usernameHasChanged) feedback = '';
 
@@ -184,6 +187,7 @@ class CreateUser extends Component {
                 value={ this.state.username }
                 disabled={ isLoading }
                 placeholder="germany2018champs"
+                onKeyPress={ (e) => e.key === '@' || e.key === ' ' ? e.preventDefault() : true }
                 onChange={ (e) => this._handleChange(e) }
                 name="username"
                 autoComplete="off"
