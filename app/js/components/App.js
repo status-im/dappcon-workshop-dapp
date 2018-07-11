@@ -42,17 +42,17 @@ class App extends Component {
   _loadCurrentUser = async () => {
     const accounts = await web3.eth.getAccounts();
     try {
+      // get the owner associated with the current defaultAccount
       const usernameHash = await DTwitter.methods.owners(accounts[0]).call();
-      if (usernameHash) {
-        // get user details from contract
-        const user = await DTwitter.methods.users(usernameHash).call();
 
-        // update user picture with ipfs url
-        user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+      // get user details from contract
+      const user = await DTwitter.methods.users(usernameHash).call();
 
-        // update state with user details
-        return this.setState({ user: user, account: accounts[0] });
-      }
+      // update user picture with ipfs url
+      user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+
+      // update state with user details
+      return this.setState({ user: user, account: accounts[0] });
     }
     catch (err) {
       this.setState({ error: err });
@@ -71,15 +71,15 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header 
-          user={ this.state.user } 
-          account={ this.state.account }
-          error={ this.state.error } />
-        <Main 
-          user={ this.state.user } 
-          account={ this.state.account } 
-          error={ this.state.error }
-          onAfterUserUpdate={ (e) => this._loadCurrentUser() } />
+        <Header
+          user={this.state.user}
+          account={this.state.account}
+          error={this.state.error} />
+        <Main
+          user={this.state.user}
+          account={this.state.account}
+          error={this.state.error}
+          onAfterUserUpdate={(e) => this._loadCurrentUser()} />
       </div>
     );
   }
