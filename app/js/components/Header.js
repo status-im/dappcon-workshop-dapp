@@ -5,6 +5,7 @@ import DoTweet from './DoTweet';
 import Search from './Search';
 import { limitAddressLength } from '../utils';
 import Spinner from 'react-spinkit';
+import FieldGroup from './FieldGroup';
 
 /**
  * Class representing the header of the page that handles
@@ -46,6 +47,11 @@ class Header extends Component {
    */
   _handleToggle() {
     this.setState({ showTooltip: !this.state.showTooltip });
+  }
+
+  _handleAcctChange(e){
+    web3.eth.defaultAccount = e.target.value;
+    this.props.onAfterUserUpdate();
   }
   //#endregion
 
@@ -118,9 +124,12 @@ class Header extends Component {
         </Modal.Footer>
       </Modal>
     </React.Fragment>;
+    const accts = this.props.accounts.map(function(address, index){
+      return <option key={ index } value={ address }>{ address }</option>
+    });
 
     return (
-      <Navbar collapseOnSelect className={this.props.user.username ? '' : 'logged-out'}>
+      <Navbar collapseOnSelect className={this.props.user.username ? '' : 'logged-out'} className={ isError ? 'error' : '' }>
         <Navbar.Header>
           <Navbar.Brand>
             <NavLink exact to="/">dTwitter <small>embark by Status</small></NavLink>
@@ -132,7 +141,14 @@ class Header extends Component {
             <Navbar.Form>
               <Search />
             </Navbar.Form>
-
+            <FieldGroup 
+              id='selectAddr' 
+              label='Select account' 
+              componentClass='select' 
+              placeholder='Select account'
+              onChange={ (e) => this._handleAcctChange(e) }>
+              { accts }
+            </FieldGroup>
             { isLoading ?
               states.isLoading
               :

@@ -12,15 +12,19 @@ module.exports = {
     rpcHost: "localhost",
     rpcPort: 8545,
     rpcCorsDomain: "auto",
-    proxy: true,
+    rpcApi: ['eth', 'web3', 'net', 'debug', 'personal'],
+    proxy: false,
     account: {
-      password: "config/development/password"
+      password: "config/development/password",
+      numAccounts: 3,
+      balance: "5 ether"
     },
     targetGasLimit: 10000000,
     wsOrigins: "auto",
     wsRPC: true,
     wsHost: "localhost",
     wsPort: 8546,
+    wsApi: ['eth', 'web3', 'net', 'shh', 'debug', 'personal'],
     simulatorMnemonic: "example exile argue silk regular smile grass bomb merge arm assist farm",
     simulatorBlocktime: 0
   },

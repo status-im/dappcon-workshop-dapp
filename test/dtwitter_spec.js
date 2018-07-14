@@ -54,7 +54,7 @@ contract("DTwitter contract", function () {
   it("should have created an owner for our defaultAccount", async function () {
     
     // read from the owners mapping
-    const usernameHash = await owners(accounts[0]).call();
+    const usernameHash = await owners(web3.eth.defaultAccount).call();
 
     // check the return value from owners mapping matches
     assert.equal(usernameHash, web3.utils.keccak256(username));

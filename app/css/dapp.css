@@ -42,6 +42,7 @@ nav .navbar-text a:hover, nav .navbar-text a:focus {
   text-decoration:none;
 }
 nav .error {color:red}
+nav.error .navbar-brand {padding-top:10px;}
 .tweets .tweet .list-group-item-text {
   white-space: pre-line;
 }

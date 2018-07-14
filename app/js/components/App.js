@@ -21,7 +21,8 @@ class App extends Component {
     this.state = {
       user: {},
       account: '',
-      error: {}
+      error: {},
+      accounts: []
     }
   }
   //#endregion
@@ -43,7 +44,7 @@ class App extends Component {
     const accounts = await web3.eth.getAccounts();
     try {
       // get the owner associated with the current defaultAccount
-      const usernameHash = await DTwitter.methods.owners(accounts[0]).call();
+      const usernameHash = await DTwitter.methods.owners(web3.eth.defaultAccount).call();
 
       // get user details from contract
       const user = await DTwitter.methods.users(usernameHash).call();
@@ -52,10 +53,10 @@ class App extends Component {
       user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
 
       // update state with user details
-      return this.setState({ user: user, account: accounts[0] });
+      return this.setState({ user: user, account: web3.eth.defaultAccount, accounts: accounts });
     }
     catch (err) {
-      this._onError(err);
+      this._onError(err, 'App._loadCurrentUser');
     }
   }
 
@@ -64,7 +65,8 @@ class App extends Component {
    * 
    * @param {Error} err - error encountered
    */
-  _onError(err) {
+  _onError(err, source) {
+    if(source) err.source = source;
     this.setState({ error: err });
     this.props.history.push('/whoopsie');
   }
@@ -83,13 +85,16 @@ class App extends Component {
         <Header
           user={this.state.user}
           account={this.state.account}
-          error={this.state.error} />
+          accounts={this.state.accounts}
+          error={this.state.error}
+          onAfterUserUpdate={(e) => this._loadCurrentUser()} />
         <Main
           user={this.state.user}
           account={this.state.account}
+          accounts={this.state.accounts}
           error={this.state.error}
           onAfterUserUpdate={(e) => this._loadCurrentUser()}
-          onError={(err) => this._onError(err)} />
+          onError={(err, source) => this._onError(err, source)} />
       </div>
     );
   }

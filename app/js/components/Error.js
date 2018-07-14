@@ -17,9 +17,8 @@ class Error extends Component {
   //#region React lifecycle events
   render() {
 
-    const metaMaskPossible = (this.props.error.message.indexOf('Internal JSON-RPC error') > 0 || this.props.error.code === -32603);
-    console.log('error = ' + this.props.error.code);
-    console.log('metaMaskPossible = ' + this.props.error.message.indexOf('Internal JSON-RPC error') > 0);
+    const metaMaskPossible = (this.props.error.message.indexOf('Internal JSON-RPC error') > 0 || this.props.error.message.indexOf('Failed to fetch') > 0);
+
     return (
       <Grid>
         <Row>
@@ -30,13 +29,21 @@ class Error extends Component {
             {metaMaskPossible ?
               <React.Fragment>
                 <h3>Metamask error?</h3>
-                <p>It appears you are using metamask. Have you signed in and are you on the right network?</p>
+                <p>It appears you might be using metamask. Have you signed in and are you on the right network?</p>
               </React.Fragment>
               :
               ''
             }
             <h3>Error details</h3>
-            <pre>{this.props.error.message}<br />{this.props.error.stack}</pre>
+            <pre>{this.props.error.message}<br />
+            {this.props.error.stack}
+            { this.props.error.source ? 
+              <React.Fragment>
+                <br/>Source: { this.props.error.source }
+              </React.Fragment>
+              : 
+              ''
+            }</pre>
           </Col>
         </Row>
       </Grid>

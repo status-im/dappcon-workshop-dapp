@@ -39,7 +39,6 @@ import { FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'rea
  * @returns {React.Component} The completed component to render.
  */
 const FieldGroup = ({ id, label, help, validationState, hasFeedback, inputAddOn, ...props }) => {
-
   return (
     <React.Fragment>
       <FormGroup controlId={id} validationState={validationState}>
@@ -52,7 +51,7 @@ const FieldGroup = ({ id, label, help, validationState, hasFeedback, inputAddOn,
             { inputAddOn.location === 'after' ? <InputGroup.Addon>{ inputAddOn.addOn }</InputGroup.Addon> : '' }
           </InputGroup>
           :
-          <FormControl {...props} />
+          <FormControl {...props}>{ props.children }</FormControl>
         }
         {hasFeedback ? <FormControl.Feedback /> : ''}
         {help && <HelpBlock>{help}</HelpBlock>}

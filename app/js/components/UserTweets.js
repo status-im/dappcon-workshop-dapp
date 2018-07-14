@@ -60,7 +60,7 @@ class UserTweets extends Component {
         fromBlock: 0
       }, (err, event) => {
         if (err){
-          this.props.onError(err);
+          this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
         }
       })
       .on('data', (event) => {
@@ -73,7 +73,7 @@ class UserTweets extends Component {
         this.setState({tweets: tweets});
       })
       .on('error', function(error){
-        this.props.onError(err);
+        this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
       });
   }
 
