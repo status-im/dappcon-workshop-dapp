@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import {Grid, Row, Col, Thumbnail, ListGroup, ListGroupItem, PageHeader } from 'react-bootstrap';
+import { Grid, Row, Col, Thumbnail, ListGroup, ListGroupItem, PageHeader } from 'react-bootstrap';
 import React, { Component } from 'react';
 import imgAvatar from '../../img/avatar-default.png';
 
@@ -57,7 +56,7 @@ class UserTweets extends Component {
   _subscribeToNewTweetEvent(username){
     this.event = DTwitter.events.NewTweet({
         filter: {_from: web3.utils.keccak256(username)}, 
-        fromBlock: 0
+        fromBlock: 1
       }, (err, event) => {
         if (err){
           this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');

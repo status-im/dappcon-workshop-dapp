@@ -39,16 +39,16 @@ class CreateUser extends Component {
     const { username, description } = this.state;
 
     try {
-
+      
       // set up our contract method with the input values from the form
       const createAccount = DTwitter.methods.createAccount(username, description);
 
       // get a gas estimate before sending the transaction
-      const gasEstimate = await createAccount.estimateGas();
+      const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
 
       // send the transaction to create an account with our gas estimate
       // (plus a little bit more in case the contract state has changed).
-      const result = await createAccount.send({ gas: gasEstimate + 1000 });
+      const result = await createAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
 
       // check result status. if status is false or '0x0', show user the tx details to debug error
       if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
@@ -168,7 +168,7 @@ class CreateUser extends Component {
     const { isLoading } = this.state;
     let validationState = this._getValidationState();
     let isValid = validationState === 'success' && !isLoading && !this.state.error;
-    let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters and cannot include <pre>@</pre> or spaces.';
+    let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters and cannot include @ or spaces.';
 
     if (!this.state.usernameHasChanged) feedback = '';
 

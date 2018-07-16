@@ -6,16 +6,7 @@ module.exports = {
       protocol: 'http',
       host: "localhost",
       port: 8545,
-      type: "rpc",
-      accounts: [
-        {
-          "mnemonic": "acquire hole quarter security auto wedding leader audit baby dawn gravity obvious",
-          "addressIndex": "0", // Optional. The index to start getting the address
-          "numAddresses": "2", // Optional. The number of addresses to get
-          "hdpath": "m/44'/60'/0'/0/",// Optional. HD derivation path
-          "balance": "5 ether"
-        }
-      ]
+      type: "rpc"
     },
     // order of connections the dapp should connect to
     dappConnection: [

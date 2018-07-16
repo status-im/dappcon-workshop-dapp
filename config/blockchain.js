@@ -19,7 +19,7 @@ module.exports = {
       numAccounts: 3,
       balance: "5 ether"
     },
-    targetGasLimit: 10000000,
+    targetGasLimit: 10000000000,
     wsOrigins: "auto",
     wsRPC: true,
     wsHost: "localhost",
