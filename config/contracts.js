@@ -3,7 +3,6 @@ module.exports = {
   default: {
     // rpc to deploy the contracts
     deployment: {
-      protocol: 'http',
       host: "localhost",
       port: 8545,
       type: "rpc"
