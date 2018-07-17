@@ -1,6 +1,7 @@
 import { Grid, Row, Col, Thumbnail, ListGroup, ListGroupItem, PageHeader } from 'react-bootstrap';
 import React, { Component } from 'react';
 import imgAvatar from '../../img/avatar-default.png';
+import { formatDistance } from 'date-fns/esm'
 
 // The Player looks up the player using the number parsed from
 // the URL's pathname. If no player is found with the given
@@ -86,7 +87,7 @@ class UserTweets extends Component {
     if(padZeros > 0){
       intDate *= Math.pow(10, padZeros);
     }
-    return new Date(intDate).toString();
+    return formatDistance(new Date(intDate), new Date()) + ' ago';
   }
   //#endregion
 
@@ -151,10 +152,10 @@ class UserTweets extends Component {
           </Row>
           <Row>
             <Col xs={4}>
-              <Thumbnail src={picture} alt={username}>
+              <Thumbnail src={picture} alt={username} className='profilePic'>
                 <h3>{ username }</h3>
                 <p>{ description }</p>
-                <p>Member since: { creationDate }</p>
+                <p className='created'>Created { creationDate }</p>
               </Thumbnail>
               
             </Col>

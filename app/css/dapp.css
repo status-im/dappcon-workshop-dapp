@@ -10,7 +10,9 @@ nav .navbar-right a, nav .navbar-right a:hover {
 }
 nav .address { cursor:help; }
 nav .navbar-default .navbar-brand { text-shadow:none;}
-nav .navbar-brand {padding-top:30px;}
+@media (min-width: 991.98px) {  
+  nav .navbar-brand {padding-top:30px;}
+}
 nav.logged-out .navbar-brand {padding-top:10px;}
 nav .navbar-brand small {     
   display: block;
@@ -49,3 +51,5 @@ nav.error .navbar-brand {padding-top:10px;}
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
   background-color: rgba(221, 221, 221, 0.4);
 }
+.tweet h4, .profilePic .created { font-size: 1.25rem; opacity: 0.5;}
+.profilePic { padding:20px; }
