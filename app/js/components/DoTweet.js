@@ -125,8 +125,8 @@ class DoTweet extends Component{
         />
         <Button
           bsStyle="primary"
-          disabled={ !isValid || error || !tweetHasChanged }            
-          onClick={ (!isValid || error || !tweetHasChanged) ? null : (e) => this._handleClick(e) }
+          disabled={ !isValid || Boolean(error) || !tweetHasChanged }            
+          onClick={ (!isValid || Boolean(error) || !tweetHasChanged) ? null : (e) => this._handleClick(e) }
         >{isLoading ? 'Loading...' : 'Post tweet'}</Button>
         <FormGroup
           controlId="formBasicText"

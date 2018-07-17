@@ -9,8 +9,36 @@ nav .navbar-right a, nav .navbar-right a:hover {
   color: #fff;
 }
 nav.navbar-default .navbar-brand { text-shadow:none;}
+nav .accounts-list.dropdown-menu {position:static; padding:2px 0; min-width:280px;}
+nav .accounts-list > li > a {
+  padding: 5px 10px;
+  line-height: 30px;
+}
+nav .accounts-list > li > a > img.profile {
+  margin-right: 5px;
+}
+nav .accounts-list small.balance {
+  font-size:75%;
+}
+nav .accounts-list > li > a > small.balance {
+  float:right;
+  margin-left:30px;
+}
+nav span.glyphicon-question-sign{
+  font-size:60px;
+  margin-right: 5px;
+}
+nav .accounts-list > li > a > span.glyphicon-question-sign{
+  font-size: 30px;
+  
+}
+nav .accounts-list > li > a > span.glyphicon-question-sign, nav .accounts-list > li > a > .address{
+  display: inline-block;
+  vertical-align: middle;
+}
 @media (min-width: 991.98px) {  
   nav .navbar-brand {padding-top:30px;}
+  nav .accounts-list.dropdown-menu {position:absolute;}
 }
 nav.logged-out .navbar-brand {padding-top:10px;}
 nav .navbar-brand small {     
@@ -61,5 +89,8 @@ nav .accounts-list.dropdown-menu { background-color: #aaa; border-color:#363763;
 nav .profile-link .username {text-shadow:none;}
 nav .dropdown .caret {border-width: 7px; }
 nav .btn-toolbar {display:inline-block; vertical-align: middle;}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+  background-image: linear-gradient(to bottom, #2a2b4eb3 0%, #2a2b4e38 100%);
+}
 .tweet h4, .profilePic .created { font-size: 1.25rem; opacity: 0.5;}
 .profilePic { padding:20px; }
