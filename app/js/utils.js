@@ -33,7 +33,7 @@ function limitLength (strToShorten, maxLength, replacement, trimMiddle){
     return strToShorten;
   }
 
-  /**
+/**
  * Limits the length of an address for display purposes, replacing the removed hex
  * chars with the replacement entity specified
  * 
@@ -61,8 +61,24 @@ function limitAddressLength (address, maxLength, replacement){
 
   return `${prepend0x ? '0x': ''}${limitLength(address, maxLength, replacement, true)}`;
 }
+
+/**
+ * Formats an ethereum amount using fixed-point notation.
+ * 
+ * @param {any} eth - amount of ethereum to display.
+ * @param {Number} decimals - number of decimal places to display.
+ * @example 
+ * const eth = 123.12345678901234567890;
+ * limitAddressLength(eth, 4);
+ * // returns 123.1234
+ * @returns {Number} the ethereum amount in fixed-point notation
+ */
+function formatEth(eth, decimals){
+  return Number.parseFloat(eth).toFixed(decimals);
+}
   
   module.exports = {
-    limitLength: limitLength,
-    limitAddressLength: limitAddressLength
+    limitLength,
+    limitAddressLength,
+    formatEth
   }

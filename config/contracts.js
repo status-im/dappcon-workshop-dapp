@@ -19,7 +19,8 @@ module.exports = {
       }
     },
     gas: "auto",
-    gasLimit: 9000000
+    gasLimit: 9000000,
+    gasPrice: 100
   },
   testnet: {
     deployment:{

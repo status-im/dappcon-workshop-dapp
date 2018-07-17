@@ -22,7 +22,8 @@ class App extends Component {
       user: {},
       account: '',
       error: {},
-      accounts: []
+      accounts: [],
+      balance: 0
     }
   }
   //#endregion
@@ -52,8 +53,11 @@ class App extends Component {
       // update user picture with ipfs url
       user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
 
+      // get current user balance
+      const balance = await web3.eth.getBalance(web3.eth.defaultAccount);
+
       // update state with user details
-      return this.setState({ user: user, account: web3.eth.defaultAccount, accounts: accounts });
+      return this.setState({ user: user, account: web3.eth.defaultAccount, accounts: accounts, balance: web3.utils.fromWei(balance, 'ether') });
     }
     catch (err) {
       this._onError(err, 'App._loadCurrentUser');
@@ -86,6 +90,7 @@ class App extends Component {
           user={this.state.user}
           account={this.state.account}
           accounts={this.state.accounts}
+          balance={this.state.balance}
           error={this.state.error}
           onAfterUserUpdate={(e) => this._loadCurrentUser()} />
         <Main

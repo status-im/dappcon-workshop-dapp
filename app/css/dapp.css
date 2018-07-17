@@ -8,8 +8,7 @@ nav .navbar-form { display: inline-block; }
 nav .navbar-right a, nav .navbar-right a:hover {
   color: #fff;
 }
-nav .address { cursor:help; }
-nav .navbar-default .navbar-brand { text-shadow:none;}
+nav.navbar-default .navbar-brand { text-shadow:none;}
 @media (min-width: 991.98px) {  
   nav .navbar-brand {padding-top:30px;}
 }
@@ -25,7 +24,7 @@ nav .profile-link {
   display: inline-block;
   vertical-align: middle;
   padding: 10px 10px 0 10px;
-  margin: 0px 15px 0 5px;
+  margin: 0 0 0 5px;
 }
 nav .profile-link .username{
   display: block;
@@ -51,5 +50,16 @@ nav.error .navbar-brand {padding-top:10px;}
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
   background-color: rgba(221, 221, 221, 0.4);
 }
+nav #dropdown-accounts {
+  background:none;
+  border:0;
+  box-shadow: none;
+  color:#fff;
+  text-shadow:none;
+}
+nav .accounts-list.dropdown-menu { background-color: #aaa; border-color:#363763; }
+nav .profile-link .username {text-shadow:none;}
+nav .dropdown .caret {border-width: 7px; }
+nav .btn-toolbar {display:inline-block; vertical-align: middle;}
 .tweet h4, .profilePic .created { font-size: 1.25rem; opacity: 0.5;}
 .profilePic { padding:20px; }
