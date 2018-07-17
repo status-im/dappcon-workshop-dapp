@@ -92,7 +92,8 @@ class App extends Component {
           accounts={this.state.accounts}
           balance={this.state.balance}
           error={this.state.error}
-          onAfterUserUpdate={(e) => this._loadCurrentUser()} />
+          onAfterUserUpdate={(e) => this._loadCurrentUser()}
+          onError={(err, source) => this._onError(err, source)} />
         <Main
           user={this.state.user}
           account={this.state.account}

@@ -75,26 +75,31 @@ class Header extends Component {
    */
   _initUserAccounts = async () => {
     await map(this.props.accounts, async function (address, next) {
+      try {
+        // gets the balance of the address
+        const balance = await web3.eth.getBalance(address);
 
-      // gets the balance of the address
-      const balance = await web3.eth.getBalance(address);
+        // get the owner details for this address from the contract
+        const usernameHash = await DTwitter.methods.owners(address).call();
 
-      // get the owner details for this address from the contract
-      const usernameHash = await DTwitter.methods.owners(address).call();
+        // get user details from contract
+        const user = await DTwitter.methods.users(usernameHash).call();
 
-      // get user details from contract
-      const user = await DTwitter.methods.users(usernameHash).call();
+        // update user picture with ipfs url
+        user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
 
-      // update user picture with ipfs url
-      user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-
-      // add the following mapping to our result
-      next(null, {
-        address: address,
-        user: user,
-        balance: web3.utils.fromWei(balance, 'ether')
-      });
+        // add the following mapping to our result
+        next(null, {
+          address: address,
+          user: user,
+          balance: web3.utils.fromWei(balance, 'ether')
+        });
+      }
+      catch (err) {
+        next(err);
+      }
     }, (err, userAccounts) => {
+      if(err) return this.props.onError(err, 'Header._initUserAccounts');
       this.setState({ userAccounts: userAccounts })
     });
   }
@@ -134,7 +139,7 @@ class Header extends Component {
       target: this.tooltipTarget,
       show: this.state.showTooltip
     };
-    
+
     let navClasses = [];
     if (isError) navClasses.push('error');
     if (!isEditable) navClasses.push('logged-out');
@@ -274,7 +279,7 @@ class Header extends Component {
                       </Dropdown.Menu>
                     </Dropdown>
                   </ButtonToolbar>
-                  { isEditable ? states.tweet : '' }
+                  {isEditable ? states.tweet : ''}
                 </React.Fragment>
             }
           </div>
