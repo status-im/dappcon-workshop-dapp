@@ -2,6 +2,7 @@ import { Grid, Row, Col, Thumbnail, ListGroup, ListGroupItem, PageHeader } from 
 import React, { Component } from 'react';
 import imgAvatar from '../../img/avatar-default.png';
 import { formatDistance } from 'date-fns/esm'
+import { EventEmitter } from 'events';
 
 // The Player looks up the player using the number parsed from
 // the URL's pathname. If no player is found with the given
@@ -36,13 +37,12 @@ class UserTweets extends Component {
    */
   _getUserDetails = async(username) => {
       // get user details and update state
-      //let user = await DTwitter.methods.users(web3.utils.keccak256(username)).call();
+      let user = { creationDate: '' } // remove me
 
       // update picture url for ipfs
-      //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
       
       // format the user.creationDate for display
-      //user.creationDate = this._formatDate(user.creationDate);
+      user.creationDate = this._formatDate(user.creationDate);
       
       this.setState({user: user});
   }
@@ -56,27 +56,20 @@ class UserTweets extends Component {
    * @returns {null}
    */
   _subscribeToNewTweetEvent(username){
-    // this.event = DTwitter.events.NewTweet({
-    //     filter: {_from: web3.utils.keccak256(username)}, 
-    //     fromBlock: 1
-    //   }, (err, event) => {
-    //     if (err){
-    //       this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
-    //     }
-    //   })
-    //   .on('data', (event) => {
-    //     let tweets = this.state.tweets;
+    this.event = new EventEmitter() // replace me with the NewTweet subscription
+      .on('data', (event) => {
+        let tweets = this.state.tweets;
         
-    //     tweets.push({
-    //       content: event.returnValues.tweet,
-    //       time: this._formatDate(event.returnValues.time)
-    //     });
+        tweets.push({
+          content: event.returnValues.tweet,
+          time: this._formatDate(event.returnValues.time)
+        });
 
-    //     this.setState({tweets: tweets});
-    //   })
-    //   .on('error', function(error){
-    //     this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
-    //   });
+        this.setState({tweets: tweets});
+      })
+      .on('error', function(error){
+        this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
+      });
   }
 
   /**
