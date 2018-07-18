@@ -25,10 +25,7 @@ To follow along, please use the [instructions](./instructions).
     * Integrated debugger - we are currently working on this, and the developer can always use remix as an alternative
 ### Known issues with this dApp
 ##### Issues on localhost
-1. Test for tweet failing
-    * *Cause:* there is a known error with `ganache` that sometimes causes last test does to fail with the error `ERROR: The returned value is not a convertible string`. While we don't konw the exact cause yet, we are currently investigating this issue.
-    * *Solution:* not yet known
-2. Create account - hangs with metamask 
+1. Create account - hangs with metamask 
     * Cause - most likely non-increasing nonce issue with metamask: https://github.com/MetaMask/metamask-extension/issues/1999)
     * Solution - open issue
 

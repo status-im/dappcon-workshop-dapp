@@ -81,7 +81,7 @@ contract DTwitter {
         users[usernameHash].description = description;
 
         // add entry to our owners mapping so we can retrieve
-        // user by their addres
+        // user by their address
         owners[msg.sender] = usernameHash;
     }
 
@@ -131,12 +131,6 @@ contract DTwitter {
 
         // get the username hash of the sender's account
         bytes32 usernameHash = owners[msg.sender];
-
-        // reject if that user doesn't exist
-        require(users[usernameHash].creationDate != 0);
-
-        // ensure the retrieved user is indeed the sender
-        require(users[usernameHash].owner == msg.sender);
 
         // get our user
         User storage user = users[usernameHash];
