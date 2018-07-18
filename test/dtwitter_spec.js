@@ -88,9 +88,9 @@ contract("DTwitter contract", function () {
       filter: { _from: usernameHash },
       fromBlock: 0
     })
-      .on('data', (event) => {
-        assert.equal(event.returnValues.tweet, tweetContent);
-      });
+    .on('data', (event) => {
+      assert.equal(event.returnValues.tweet, tweetContent);
+    });
 
     await tweet(tweetContent).send();
   });
