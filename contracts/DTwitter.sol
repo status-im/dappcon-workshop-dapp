@@ -126,7 +126,6 @@ contract DTwitter {
         bytes32 usernameHash = owners[msg.sender];
 
         // get our user
-        User storage user = users[usernameHash];
 
         // get our new tweet index
 
