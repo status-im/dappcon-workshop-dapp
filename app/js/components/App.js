@@ -3,6 +3,7 @@ import Main from './Main'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import imgAvatar from '../../img/avatar-default.png';
+import { map } from 'async';
 
 /**
  * Class representing the highest order component. Any user
@@ -22,7 +23,7 @@ class App extends Component {
       user: {},
       account: '',
       error: {},
-      accounts: [],
+      userAccounts: [],
       balance: 0
     }
   }
@@ -30,38 +31,63 @@ class App extends Component {
 
   //#region Helper methods
   /**
-   * Loads user details from the contract based on the current
-   * account (address).
+   * Loads user details from the contract for all accounts on the node.
    * 
-   * First, the owners mapping is queried using the owner address key. It returns
-   * the hash of the username it maps to. This username hash is then used to query
-   * the users mapping in the contract to get the details of the user. Once the user
-   * details are returned, the state is updated with the details, which triggers a
-   * render in this component and all child components.
+   * For each account on the node, first, the owners mapping is queried using the 
+   * owner address key. It returns the hash of the username it maps to. This 
+   * username hash is then used to query the users mapping in the contract to 
+   * get the details of the user. Once the user details are returned, the state 
+   * is updated with the details, which triggers a render in this component and 
+   * all child components.
    * 
    * @returns {null}
    */
-  _loadCurrentUser = async () => {
-    const accounts = await web3.eth.getAccounts();
-    try {
-      // get the owner associated with the current defaultAccount
-      const usernameHash = await DTwitter.methods.owners(web3.eth.defaultAccount).call();
+  _loadCurrentUserAccounts = async () => {
 
-      // get user details from contract
-      const user = await DTwitter.methods.users(usernameHash).call();
+      // get all the accounts the node controls
+      const accounts = await web3.eth.getAccounts();
 
-      // update user picture with ipfs url
-      user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+      // Generates a mapping of users and accounts to be used
+      // for populating the accounts dropdown
+      await map(accounts, async function (address, next) {
+        try {
+          // gets the balance of the address
+          let balance = await web3.eth.getBalance(address);
+          balance = web3.utils.fromWei(balance, 'ether');
 
-      // get current user balance
-      const balance = await web3.eth.getBalance(web3.eth.defaultAccount);
+          // get the owner details for this address from the contract
+          const usernameHash = await DTwitter.methods.owners(address).call();
 
-      // update state with user details
-      return this.setState({ user: user, account: web3.eth.defaultAccount, accounts: accounts, balance: web3.utils.fromWei(balance, 'ether') });
-    }
-    catch (err) {
-      this._onError(err, 'App._loadCurrentUser');
-    }
+          // get user details from contract
+          const user = await DTwitter.methods.users(usernameHash).call();
+
+          // update user picture with ipfs url
+          user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+
+          // add the following mapping to our result
+          next(null, {
+            address: address,
+            user: user,
+            balance: balance
+          });
+        }
+        catch (err) {
+          next(err);
+        }
+      }, (err, userAccounts) => {
+        if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
+
+        const defaultUserAccount = userAccounts.find((userAccount) => {
+          return userAccount.address === web3.eth.defaultAccount;
+        });
+
+        this.setState({
+          userAccounts: userAccounts,
+          user: defaultUserAccount.user,
+          account: web3.eth.defaultAccount,
+          balance: defaultUserAccount.balance
+        });
+      });
   }
 
   /**
@@ -70,7 +96,7 @@ class App extends Component {
    * @param {Error} err - error encountered
    */
   _onError(err, source) {
-    if(source) err.source = source;
+    if (source) err.source = source;
     this.setState({ error: err });
     this.props.history.push('/whoopsie');
   }
@@ -79,7 +105,7 @@ class App extends Component {
   //#region React lifecycle events
   componentDidMount() {
     EmbarkJS.onReady(() => {
-      setTimeout(() => { this._loadCurrentUser(); }, 0);
+      setTimeout(() => { this._loadCurrentUserAccounts(); }, 0);
     });
   }
 
@@ -89,17 +115,17 @@ class App extends Component {
         <Header
           user={this.state.user}
           account={this.state.account}
-          accounts={this.state.accounts}
+          userAccounts={this.state.userAccounts}
           balance={this.state.balance}
           error={this.state.error}
-          onAfterUserUpdate={(e) => this._loadCurrentUser()}
+          onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
           onError={(err, source) => this._onError(err, source)} />
         <Main
           user={this.state.user}
           account={this.state.account}
-          accounts={this.state.accounts}
+          userAccounts={this.state.userAccounts}
           error={this.state.error}
-          onAfterUserUpdate={(e) => this._loadCurrentUser()}
+          onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
           onError={(err, source) => this._onError(err, source)} />
       </div>
     );

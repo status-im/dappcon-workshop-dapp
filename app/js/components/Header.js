@@ -6,7 +6,6 @@ import Search from './Search';
 import { limitLength, limitAddressLength } from '../utils';
 import Spinner from 'react-spinkit';
 import FieldGroup from './FieldGroup';
-import { map } from 'async';
 import imgAvatar from '../../img/avatar-default.png';
 
 /**
@@ -24,8 +23,7 @@ class Header extends Component {
 
     this.state = {
       showModal: false,
-      showTooltip: false,
-      userAccounts: []
+      showTooltip: false
     };
   }
   //#endregion
@@ -70,41 +68,6 @@ class Header extends Component {
   }
 
   /**
-   * Generates a mapping of users and accounts to be used
-   * for populating the accounts dropdown
-   */
-  _initUserAccounts = async () => {
-    await map(this.props.accounts, async function (address, next) {
-      try {
-        // gets the balance of the address
-        const balance = await web3.eth.getBalance(address);
-
-        // get the owner details for this address from the contract
-        const usernameHash = await DTwitter.methods.owners(address).call();
-
-        // get user details from contract
-        const user = await DTwitter.methods.users(usernameHash).call();
-
-        // update user picture with ipfs url
-        user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-
-        // add the following mapping to our result
-        next(null, {
-          address: address,
-          user: user,
-          balance: web3.utils.fromWei(balance, 'ether')
-        });
-      }
-      catch (err) {
-        next(err);
-      }
-    }, (err, userAccounts) => {
-      if(err) return this.props.onError(err, 'Header._initUserAccounts');
-      this.setState({ userAccounts: userAccounts })
-    });
-  }
-
-  /**
    * Formats an ethereum balance for display
    * @param {*} balance to be formatted
    */
@@ -119,16 +82,6 @@ class Header extends Component {
 
   //#region React lifecycle events
 
-  componentDidMount() {
-    EmbarkJS.onReady((err) => {
-      this._initUserAccounts();
-    });
-  }
-  componentDidUpdate(prevProps) {
-    if (this.props.accounts !== prevProps.accounts) {
-      this._initUserAccounts();
-    }
-  }
   render() {
     const { picture, username, description } = this.props.user;
     const isEditable = Boolean(username);
@@ -146,7 +99,7 @@ class Header extends Component {
 
     // generate the menuitems for the accounts to populate
     // the accounts dropdown
-    const accts = this.state.userAccounts.map((userAccount, index) => {
+    const accts = this.props.userAccounts.map((userAccount, index) => {
       const isCurrUser = userAccount.address === this.props.account;
       const hasUser = Boolean(userAccount.user.username);
 
