@@ -74,15 +74,15 @@ contract DTwitter {
         // reject if sending adddress already created a user
         require(owners[msg.sender] == 0);
 
-        // add a user to the users mapping and populate details
-        users[usernameHash].creationDate = now;
-        users[usernameHash].owner = msg.sender;
-        users[usernameHash].username = username;
-        users[usernameHash].description = description;
+        // add a user to the users mapping and populate details (creationDate, owner, username, description)
+        // users[usernameHash].creationDate = now;
+        // users[usernameHash].owner = msg.sender;
+        // users[usernameHash].username = username;
+        // users[usernameHash].description = description;
 
         // add entry to our owners mapping so we can retrieve
         // user by their addres
-        owners[msg.sender] = usernameHash;
+        // owners[msg.sender] = usernameHash;
     }
 
     /**
@@ -99,13 +99,13 @@ contract DTwitter {
         require(users[usernameHash].owner == msg.sender);
 
         // update the description (could be empty)
-        users[usernameHash].description = description;
+        //users[usernameHash].description = description;
 
         // only update the user's picture if the hash passed in is
         // not empty or null (essentially disallows deletions)
-        if (bytes(pictureHash).length > 0) {
-            users[usernameHash].picture = pictureHash;
-        }
+        // if (bytes(pictureHash).length > 0) {
+        //     users[usernameHash].picture = pictureHash;
+        // }
     }
 
     /**
@@ -138,17 +138,17 @@ contract DTwitter {
         // ensure the retrieved user is indeed the sender
         require(users[usernameHash].owner == msg.sender);
 
-        // get our user
-        User storage user = users[usernameHash];
+        // get our user from the usernameHash
+        //User storage user = users[usernameHash];
 
         // get our new tweet index
-        uint tweetIndex = user.tweets.length++;
+        //uint tweetIndex = user.tweets.length++;
 
-        // update the user's tweets
-        user.tweets[tweetIndex] = content;
+        // update the user's tweets at the tweet index
+        //user.tweets[tweetIndex] = content;
 
         // emit the tweet event and notify the listeners
-        emit NewTweet(usernameHash, content, now);
+        //emit NewTweet(usernameHash, content, now);
     }
 
 }

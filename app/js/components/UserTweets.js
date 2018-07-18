@@ -36,12 +36,13 @@ class UserTweets extends Component {
    */
   _getUserDetails = async(username) => {
       // get user details and update state
-      let user = await DTwitter.methods.users(web3.utils.keccak256(username)).call();
+      //let user = await DTwitter.methods.users(web3.utils.keccak256(username)).call();
 
       // update picture url for ipfs
-      user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-      // TODO: update to Date.js
-      user.creationDate = this._formatDate(user.creationDate);
+      //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+      
+      // format the user.creationDate for display
+      //user.creationDate = this._formatDate(user.creationDate);
       
       this.setState({user: user});
   }
@@ -55,26 +56,27 @@ class UserTweets extends Component {
    * @returns {null}
    */
   _subscribeToNewTweetEvent(username){
-    this.event = DTwitter.events.NewTweet({
-        filter: {_from: web3.utils.keccak256(username)}, 
-        fromBlock: 1
-      }, (err, event) => {
-        if (err){
-          this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
-        }
-      })
-      .on('data', (event) => {
-        let tweets = this.state.tweets;
-        tweets.push({
-          content: event.returnValues.tweet,
-          // TODO: update to Date.js
-          time: this._formatDate(event.returnValues.time)
-        });
-        this.setState({tweets: tweets});
-      })
-      .on('error', function(error){
-        this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
-      });
+    // this.event = DTwitter.events.NewTweet({
+    //     filter: {_from: web3.utils.keccak256(username)}, 
+    //     fromBlock: 1
+    //   }, (err, event) => {
+    //     if (err){
+    //       this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
+    //     }
+    //   })
+    //   .on('data', (event) => {
+    //     let tweets = this.state.tweets;
+        
+    //     tweets.push({
+    //       content: event.returnValues.tweet,
+    //       time: this._formatDate(event.returnValues.time)
+    //     });
+
+    //     this.setState({tweets: tweets});
+    //   })
+    //   .on('error', function(error){
+    //     this.props.onError(err, 'UserTweets._subscribeToNewTweetEvent');
+    //   });
   }
 
   /**

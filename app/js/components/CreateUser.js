@@ -41,19 +41,19 @@ class CreateUser extends Component {
     try {
       
       // set up our contract method with the input values from the form
-      const createAccount = DTwitter.methods.createAccount(username, description);
+      //const createAccount = DTwitter.methods.createAccount(username, description);
 
       // get a gas estimate before sending the transaction
-      const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
+      //const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
 
       // send the transaction to create an account with our gas estimate
       // (plus a little bit more in case the contract state has changed).
-      const result = await createAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
+      //const result = await createAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
 
       // check result status. if status is false or '0x0', show user the tx details to debug error
-      if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-        return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-      }
+      // if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
+      //   return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+      // }
 
       // Completed of async action, set loading state back
       this.setState({ isLoading: false });
