@@ -81,7 +81,8 @@ contract("DTwitter contract", function () {
   it("should be able to add a tweet as 'testhandle' and receive it via contract event", async function () {
     const usernameHash = web3.utils.keccak256(username);
     
-    // subscribe to the NewTweet event
+    await tweet(tweetContent).send();
+
     DTwitter.events.NewTweet({
       filter: { _from: usernameHash },
       fromBlock: 1
@@ -89,9 +90,6 @@ contract("DTwitter contract", function () {
     .on('data', (event) => {
       assert.equal(event.returnValues.tweet, tweetContent);
     });
-
-    // do the tweet
-    await tweet(tweetContent).send();
   });
 
 });
