@@ -1,9 +1,9 @@
 {
-  "0x88ff9440720de19a7a4df9f79a0f90a242e059deb582c9bbdaeb71c9ba485ace": {
+  "0x50cd73c045daf6fbf33f125c26711e765e4f14fb94987804b59a5201c89b92ac": {
     "contracts": {
       "0x35cbd109f501602ed728b03e78faa3df2cc6b5c9db220e139623f9ae41389b02": {
         "name": "DTwitter",
-        "address": "0x967F11b60DEbd189A4A659797331567391460ED4"
+        "address": "0xE02B274706745Dbf9000bD1c102F991608ffeC90"
       }
     }
   }

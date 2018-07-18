@@ -40,7 +40,8 @@ class UserTweets extends Component {
 
       // update picture url for ipfs
       user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-      // TODO: update to Date.js
+      
+      // prettify creation date
       user.creationDate = this._formatDate(user.creationDate);
       
       this.setState({user: user});
@@ -67,7 +68,8 @@ class UserTweets extends Component {
         let tweets = this.state.tweets;
         tweets.push({
           content: event.returnValues.tweet,
-          // TODO: update to Date.js
+          
+          // prettify our tweet date
           time: this._formatDate(event.returnValues.time)
         });
         this.setState({tweets: tweets});
@@ -118,8 +120,9 @@ class UserTweets extends Component {
    */
   componentWillUnmount(){
     if(!this.event) return;
-    // TODO: check if this is the 'right' way to remove / stop the event listener
-    this.event.removeListener(this.event);
+    
+    // unsubscribe from our contract event listening for tweets
+    this.event.unsubscribe();
   }
 
   render(){

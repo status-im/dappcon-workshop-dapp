@@ -13,7 +13,7 @@ module.exports = {
     rpcPort: 8545,
     rpcCorsDomain: "auto",
     rpcApi: ['eth', 'web3', 'net', 'debug', 'personal'],
-    proxy: false,
+    proxy: true,
     account: {
       password: "config/development/password",
       numAccounts: 3,
