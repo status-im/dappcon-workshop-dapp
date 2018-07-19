@@ -1,5 +1,5 @@
 ## Coding: dApp
-Let’s use the `EmbarkJS` API to interact with our contact in our dApp. As we update the .js files, notice how Embark watches the files and compiles as we save.
+Let’s use the code-generated `DTwitter` API and the `EmbarkJS` API to interact with our contact in our dApp. As we update the .js files, notice how Embark watches the files and compiles as we save.
 ###### `CreateUser.js`
 1. We need to update the `_handleChange` function that will check if a user exists as the user types in a username. 
 ```
