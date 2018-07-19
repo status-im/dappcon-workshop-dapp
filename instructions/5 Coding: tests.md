@@ -1,6 +1,6 @@
 ## Contract tests
-Now that we have our contract written, we can use the code generation provided by EmbarkJS to write our contract unit test cases for TDD development. Embark will code generate a DTwitter javascript object from our contract and make it accessible in our dApp by way of the `EmbarkJS` object. 
-> Additionally, Embark also has an API for decentralised storage (IPFS and Swarm), and decentralised communication (Whisper), which are all configurable in config files. 
+Now that we have our contract written, we can use the code generation provided by EmbarkJS to write our contract unit test cases for TDD development. Embark will code generate a DTwitter javascript object from our contract and make it accessible in our dApp by way of the `DTwitter` object. 
+> Additionally, Embark also has an API (`EmbarkJS`) for decentralised storage (IPFS and Swarm), and decentralised communication (Whisper), which are all configurable in config files. 
 ###### Create account transaction should be successful
 Our first test is to ensure that our `createAccount` transaction is sent successfully.
 ```
