@@ -43,7 +43,6 @@ embark version
 
 Make sure the version is `3.1.6`. If it’s not, re-install Embark by running:
 ```
-npm uninstall -g embark
 npm install -g embark
 ```
 > Do not use sudo when installing Embark
