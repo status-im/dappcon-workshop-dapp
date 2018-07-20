@@ -17,7 +17,7 @@
  * // returns '123-890'
  * @returns {String} the shortened string
  */
-function limitLength (strToShorten, maxLength, replacement, trimMiddle){
+export function limitLength (strToShorten, maxLength, replacement, trimMiddle){
     if(!strToShorten) return '';
 
     const fullStringLength = strToShorten.length;
@@ -50,7 +50,7 @@ function limitLength (strToShorten, maxLength, replacement, trimMiddle){
  * // returns '0x390-552'
  * @returns {String} the shortened string
  */
-function limitAddressLength (address, maxLength, replacement){
+export function limitAddressLength (address, maxLength, replacement){
   if(!address) return '';
   let prepend0x = false;
 
@@ -73,12 +73,6 @@ function limitAddressLength (address, maxLength, replacement){
  * // returns 123.1234
  * @returns {Number} the ethereum amount in fixed-point notation
  */
-function formatEth(eth, decimals){
+export function formatEth(eth, decimals){
   return Number.parseFloat(eth).toFixed(decimals);
 }
-  
-  module.exports = {
-    limitLength,
-    limitAddressLength,
-    formatEth
-  }
