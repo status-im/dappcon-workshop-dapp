@@ -11,17 +11,14 @@ To follow along, please use the [instructions](./instructions).
     * ERC-721 (collectibles) tutorial and demo app: https://github.com/status-im/embark-tutorial-erc721. Tutorial docs here: https://github.com/status-im/embark-tutorial-erc721/tree/tutorial-series/tutorial
 3. Where can I learn more about the API of the EmbarkJS object?
     * We are currently working on updating the docs, and additionally we are currently making EmbarkJS a library on its own right: https://github.com/embark-framework/EmbarkJS
-4. What are the "key" differences between Embark and Truffle?
-    **Advantages**
+4. What are the "key" features of Embark?
     * Embark is focused on the trinity of web3 components that can be used to create truly decentralised applications
         * The original trinity of web3, from the ethereum platform perspective, includes consensus, blockchain, and smart contracts. As well as swarm for decentralized storage and whisper for decentralized communication.
-    * Embark is a “true” dapp framework to build real dApp, while truffle, for the most part, focuses mostly on the smart contract side. Embark can also be used just for developing contracts as well.
+    * Embark is a “true” dApp framework to assist the developer in building real dApps. Embark can also be used just for developing contracts as well.
     * Embark is meant to help the developer easily integrate with other decentralized technologies, like storage, communication, and (in 3.2) naming systems.
     * Embark is meant to be both advanced and easy to use
     * Embark has reasonable defaults and tries to make your life easier, but it can always be overridden for configurable for your specific needs
     * Embark has a very plugin-driven architecture, so developers can also extend it to their own needs
-    
-    **Disadvantages**
     * Integrated debugger - we are currently working on this, and the developer can always use remix as an alternative
 ### Known issues with this dApp
 ##### Issues on localhost
