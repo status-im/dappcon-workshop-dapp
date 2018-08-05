@@ -35,19 +35,19 @@ If you need to [install `geth`](https://github.com/ethereum/go-ethereum/wiki/Bui
 brew tap ethereum/ethereum
 brew install ethereum
 ```
-## Installing Embark 3.1.6
+## Installing Embark 3.1.7
 If you already have Embark installed, please run: 
 ```
 embark version
 ```
 
-Make sure the version is `3.1.6`. If it’s not, re-install Embark by running:
+Make sure the version is `3.1.7`. If it’s not, re-install Embark by running:
 ```
 npm install -g embark
 ```
 > Do not use sudo when installing Embark
 
-Re-run `embark version` to ensure we have `3.1.6`. 
+Re-run `embark version` to ensure we have `3.1.7`. 
 
 If you have not installed Embark at all, Embark can be installed by running
 `npm install -g embark` (without sudo)
