@@ -121,6 +121,8 @@ contract DTwitter {
      * {string} content - the tweet content
      */
     function tweet(string content) public {
+        // ensure the sender has an account
+        require(owners[msg.sender].length > 0);
 
         // get the username hash of the sender's account
         bytes32 usernameHash = owners[msg.sender];
