@@ -110,7 +110,7 @@ contract DTwitter {
      */
     function userExists(bytes32 usernameHash) public view returns (bool) {
         // must check a property... bc solidity!
-        //return users[usernameHash].creationDate != 0;
+        
     }
 
     /**
