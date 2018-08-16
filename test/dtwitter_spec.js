@@ -88,7 +88,7 @@ contract("DTwitter contract", function () {
 
     DTwitter.events.NewTweet({
       filter: { _from: usernameHash },
-      fromBlock: 0
+      fromBlock: 1
     })
     .on('data', (event) => {
       assert.equal(event.returnValues.tweet, tweetContent);
