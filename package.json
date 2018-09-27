@@ -2,7 +2,6 @@
   "name": "embark-dtwitter",
   "version": "0.0.1",
   "description": "",
-  "main": "Gruntfile.js",
   "scripts": {
     "test": "embark test"
   },
@@ -12,7 +11,6 @@
   "dependencies": {
     "async": "^2.6.1",
     "date-fns": "^2.0.0-alpha.11",
-    "npm": "^6.2.0",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.2",
@@ -21,11 +19,6 @@
   },
   "devDependencies": {
     "@babel/core": "7.0.0-rc.1",
-    "@babel/plugin-proposal-class-properties": "7.0.0-rc.1",
-    "@babel/plugin-proposal-decorators": "7.0.0-rc.1",
-    "@babel/plugin-proposal-export-namespace-from": "7.0.0-rc.1",
-    "@babel/plugin-proposal-function-sent": "7.0.0-rc.1",
-    "@babel/plugin-proposal-numeric-separator": "7.0.0-rc.1",
-    "@babel/plugin-proposal-throw-expressions": "7.0.0-rc.1"
+    "@babel/plugin-proposal-class-properties": "7.0.0-rc.1"
   }
 }
