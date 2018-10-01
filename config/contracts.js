@@ -52,5 +52,13 @@ module.exports = {
       protocol: 'https',
       type: "rpc"
     }
+  },
+
+  development: {
+    dappConnection: [
+      "ws://localhost:8546",
+      "http://localhost:8545",
+      "$WEB3"  // uses pre existing web3 object if available (e.g in Mist)
+    ]
   }
 }
