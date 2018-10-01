@@ -113,8 +113,8 @@ class UserTweets extends Component {
    */
   componentWillUnmount(){
     if(!this.event) return;
-    // TODO: check if this is the 'right' way to remove / stop the event listener
-    this.event.removeListener(this.event);
+    // unsubscribe from our contract event listening for tweets
+    this.event.unsubscribe();
   }
 
   render(){
