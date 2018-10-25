@@ -50,9 +50,11 @@ class DoTweet extends Component{
     
     try{
       // estimate gas before sending tweet transaction
+      const gasEstimate = await tweet.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
       
       // send the tweet transaction plus a little extra gas in case the contract state
       // has changed since we've done our gas estimate
+      await tweet.send({ from: web3.eth.defaultAccount, gas: gasEstimate + 1000 });
       
       // remove loading state
       this.setState({ isLoading: false });
